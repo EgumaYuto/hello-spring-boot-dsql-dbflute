@@ -1,0 +1,6 @@
+map:{
+    ; database       = postgresql
+    ; targetLanguage = java
+    ; targetContainer = spring
+    ; packageBase    = org.example.dbflute
+}

@@ -1,0 +1,13 @@
+map:{
+    ; driver   = org.postgresql.Driver
+    ; url      = jdbc:postgresql://localhost:5432/hellodb
+    ; schema   = public
+    ; user     = hellouser
+    ; password = hellopassword
+    ; propertiesMap = map:{
+    }
+    ; variousMap = map:{
+        # Flyway's bookkeeping table is not part of the domain model.
+        ; tableExceptList = list:{ flyway_schema_history }
+    }
+}
