@@ -1,0 +1,8 @@
+map:{
+    # Scope the outside-SQL scan to the DBFlute package base (org.example.dbflute).
+    # Without this, the OutsideSqlTest task (run by `manage.sh regenerate`/`renewal`)
+    # walks all of src/main/resources and picks up the Flyway migration files under
+    # db/migration as if they were outside-SQL, failing the required-title check.
+    # This project doesn't use outside-SQL, so the scoped path is effectively empty.
+    ; sqlPackage = $$PACKAGE_BASE$$
+}
