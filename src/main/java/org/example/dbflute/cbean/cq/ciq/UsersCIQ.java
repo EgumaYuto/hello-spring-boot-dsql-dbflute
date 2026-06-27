@@ -65,6 +65,7 @@ public class UsersCIQ extends AbstractBsUsersCQ {
     protected ConditionValue xgetCValueName() { return _myCQ.xdfgetName(); }
     protected ConditionValue xgetCValueEmail() { return _myCQ.xdfgetEmail(); }
     protected ConditionValue xgetCValueCreatedAt() { return _myCQ.xdfgetCreatedAt(); }
+    protected ConditionValue xgetCValuePasswordHash() { return _myCQ.xdfgetPasswordHash(); }
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String pp) { return null; }
     public String keepScalarCondition(UsersCQ sq)
     { throwIICBOE("ScalarCondition"); return null; }

@@ -306,6 +306,11 @@ public class BsUsersCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnCreatedAt() { return doColumn("created_at"); }
+        /**
+         * password_hash: {varchar(255)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnPasswordHash() { return doColumn("password_hash"); }
         public void everyColumn() { doEveryColumn(); }
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override

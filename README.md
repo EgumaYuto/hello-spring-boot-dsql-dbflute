@@ -88,7 +88,7 @@ $ docker compose up -d
 # connect to local postgres (password: hellopassword)
 $ psql -h 127.0.0.1 -U hellouser -d hellodb
 
-# migration (creates the users table)
+# migration (creates the users table + password_hash column)
 $ ./gradlew flywayMigrate
 
 # generate DBFlute code from the migrated schema
@@ -97,13 +97,57 @@ $ ./scripts/dbflute-generate.sh
 
 # run the app locally (normal embedded Tomcat, default profile)
 $ ./gradlew bootRun
-$ curl http://127.0.0.1:8080/        # -> Hello World!
-$ curl http://127.0.0.1:8080/user    # -> []
+$ curl http://127.0.0.1:8080/            # -> Hello World!
+$ curl http://127.0.0.1:8080/api/users   # -> 401 (now auth-protected)
 ```
 
 > The generated DBFlute sources under `src/main/java/org/example/dbflute/` are
 > committed, so the deployable build does not need a database or the engine.
 > Re-run `./scripts/dbflute-generate.sh` after changing a migration.
+
+## Web app: React frontend + JWT login
+
+A React + TypeScript single-page app lives in [`frontend/`](frontend/). It has a
+sign-up / login flow and a protected page (the user list). Auth is **stateless
+JWT**: `POST /api/auth/login` (or `/register`) returns a token, the SPA stores it
+in `localStorage` and sends it as `Authorization: Bearer <token>`; everything
+under `/api/**` except `/api/auth/**` requires a valid token. The token-issuing
+secret is `app.jwt.secret` in `application.yml` (override via `APP_JWT_SECRET` in
+production). Passwords are stored as BCrypt hashes in `users.password_hash`.
+
+### Run both locally
+
+The Vite dev server (`:5173`) proxies `/api` to Spring Boot (`:8080`), so the
+browser talks to a single origin.
+
+```bash
+# one-time: start DB + migrate (see "Local development" above)
+$ docker compose up -d && ./gradlew flywayMigrate
+
+# start backend + frontend together (Ctrl-C stops both)
+$ ./scripts/dev.sh
+
+# ...or in two terminals:
+$ ./gradlew bootRun                       # terminal A: backend on :8080
+$ cd frontend && npm install && npm run dev  # terminal B: frontend on :5173
+```
+
+Then open <http://localhost:5173>, register a user, and you land on the protected
+user-list page. Reloading keeps you logged in (token in `localStorage`); logout
+clears it.
+
+Quick API check without the UI:
+
+```bash
+$ curl -s -X POST http://127.0.0.1:8080/api/auth/register \
+    -H 'Content-Type: application/json' \
+    -d '{"name":"Ada","email":"ada@example.com","password":"secret123"}'
+# -> {"token":"<jwt>","user":{"id":"...","name":"Ada","email":"ada@example.com"}}
+
+$ TOKEN=<jwt>
+$ curl -s http://127.0.0.1:8080/api/users -H "Authorization: Bearer $TOKEN"
+# -> [{"id":"...","name":"Ada","email":"ada@example.com"}]
+```
 
 ## Deploy to AWS (Aurora DSQL + Lambda)
 

@@ -468,6 +468,159 @@ public abstract class AbstractBsUsersCQ extends AbstractConditionQuery {
     protected void regCreatedAt(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCreatedAt(), "created_at"); }
     protected abstract ConditionValue xgetCValueCreatedAt();
 
+    /**
+     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHash The value of passwordHash as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setPasswordHash_Equal(String passwordHash) {
+        doSetPasswordHash_Equal(fRES(passwordHash));
+    }
+
+    protected void doSetPasswordHash_Equal(String passwordHash) {
+        regPasswordHash(CK_EQ, passwordHash);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHash The value of passwordHash as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setPasswordHash_NotEqual(String passwordHash) {
+        doSetPasswordHash_NotEqual(fRES(passwordHash));
+    }
+
+    protected void doSetPasswordHash_NotEqual(String passwordHash) {
+        regPasswordHash(CK_NES, passwordHash);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHash The value of passwordHash as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setPasswordHash_GreaterThan(String passwordHash) {
+        regPasswordHash(CK_GT, fRES(passwordHash));
+    }
+
+    /**
+     * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHash The value of passwordHash as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setPasswordHash_LessThan(String passwordHash) {
+        regPasswordHash(CK_LT, fRES(passwordHash));
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHash The value of passwordHash as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setPasswordHash_GreaterEqual(String passwordHash) {
+        regPasswordHash(CK_GE, fRES(passwordHash));
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHash The value of passwordHash as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setPasswordHash_LessEqual(String passwordHash) {
+        regPasswordHash(CK_LE, fRES(passwordHash));
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHashList The collection of passwordHash as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setPasswordHash_InScope(Collection<String> passwordHashList) {
+        doSetPasswordHash_InScope(passwordHashList);
+    }
+
+    protected void doSetPasswordHash_InScope(Collection<String> passwordHashList) {
+        regINS(CK_INS, cTL(passwordHashList), xgetCValuePasswordHash(), "password_hash");
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHashList The collection of passwordHash as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setPasswordHash_NotInScope(Collection<String> passwordHashList) {
+        doSetPasswordHash_NotInScope(passwordHashList);
+    }
+
+    protected void doSetPasswordHash_NotInScope(Collection<String> passwordHashList) {
+        regINS(CK_NINS, cTL(passwordHashList), xgetCValuePasswordHash(), "password_hash");
+    }
+
+    /**
+     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * password_hash: {varchar(255)} <br>
+     * <pre>e.g. setPasswordHash_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
+     * @param passwordHash The value of passwordHash as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param opLambda The callback for option of like-search. (NotNull)
+     */
+    public void setPasswordHash_LikeSearch(String passwordHash, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setPasswordHash_LikeSearch(passwordHash, xcLSOP(opLambda));
+    }
+
+    /**
+     * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * password_hash: {varchar(255)} <br>
+     * <pre>e.g. setPasswordHash_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
+     * @param passwordHash The value of passwordHash as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param likeSearchOption The option of like-search. (NotNull)
+     */
+    protected void setPasswordHash_LikeSearch(String passwordHash, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_LS, fRES(passwordHash), xgetCValuePasswordHash(), "password_hash", likeSearchOption);
+    }
+
+    /**
+     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
+     * And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHash The value of passwordHash as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param opLambda The callback for option of like-search. (NotNull)
+     */
+    public void setPasswordHash_NotLikeSearch(String passwordHash, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setPasswordHash_NotLikeSearch(passwordHash, xcLSOP(opLambda));
+    }
+
+    /**
+     * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
+     * And NullOrEmptyIgnored, SeveralRegistered. <br>
+     * password_hash: {varchar(255)}
+     * @param passwordHash The value of passwordHash as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * @param likeSearchOption The option of not-like-search. (NotNull)
+     */
+    protected void setPasswordHash_NotLikeSearch(String passwordHash, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_NLS, fRES(passwordHash), xgetCValuePasswordHash(), "password_hash", likeSearchOption);
+    }
+
+    /**
+     * IsNull {is null}. And OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     */
+    public void setPasswordHash_IsNull() { regPasswordHash(CK_ISN, DOBJ); }
+
+    /**
+     * IsNullOrEmpty {is null or empty}. And OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     */
+    public void setPasswordHash_IsNullOrEmpty() { regPasswordHash(CK_ISNOE, DOBJ); }
+
+    /**
+     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
+     * password_hash: {varchar(255)}
+     */
+    public void setPasswordHash_IsNotNull() { regPasswordHash(CK_ISNN, DOBJ); }
+
+    protected void regPasswordHash(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValuePasswordHash(), "password_hash"); }
+    protected abstract ConditionValue xgetCValuePasswordHash();
+
     // ===================================================================================
     //                                                                     ScalarCondition
     //                                                                     ===============

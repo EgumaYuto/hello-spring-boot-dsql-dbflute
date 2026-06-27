@@ -179,6 +179,11 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/gradle,kotlin,intellij+all,terraform
+### Frontend (Vite + React) ###
+/frontend/node_modules/
+/frontend/dist/
+/frontend/*.tsbuildinfo
+
 ### DBFlute ###
 # Engine is large and regenerable; download it with scripts/dbflute-engine.sh
 /mydbflute/
