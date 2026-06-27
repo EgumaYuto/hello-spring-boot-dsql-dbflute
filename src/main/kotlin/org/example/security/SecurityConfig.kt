@@ -64,14 +64,15 @@ class SecurityConfig(
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     /**
-     * Dev CORS for the Vite dev server. In normal local use the Vite proxy makes
-     * requests same-origin, but this also allows hitting the API directly from
-     * http://localhost:5173 during development.
+     * Dev CORS for the Vite dev server. Even via the Vite proxy (same-origin) the
+     * browser sends an `Origin` header on POSTs, so Spring Security still evaluates
+     * CORS; allow any localhost port so both `npm run dev` (:5173) and the
+     * Lambda-targeting mode (:5174, or any fallback port) work.
      */
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val config = CorsConfiguration().apply {
-            allowedOrigins = listOf("http://localhost:5173")
+            allowedOriginPatterns = listOf("http://localhost:*", "http://127.0.0.1:*")
             allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
             allowedHeaders = listOf("*")
         }
