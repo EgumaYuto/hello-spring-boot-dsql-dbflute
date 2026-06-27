@@ -15,8 +15,12 @@ logging:
 
 spring:
   # Load the JWT secret (and any other params) from SSM Parameter Store at startup.
-  # The Lambda execution role is granted ssm:GetParameter + kms:Decrypt (see
+  # The Lambda execution role is granted ssm:GetParametersByPath + kms:Decrypt (see
   # infra/aws/iam.tf). Only the dsql profile imports this, so local dev never calls AWS.
+  cloud:
+    aws:
+      parameterstore:
+        enabled: true
   config:
     import: aws-parameterstore:/hello-spring-boot-dsql-dbflute/
   datasource:

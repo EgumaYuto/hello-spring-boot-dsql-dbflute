@@ -9,10 +9,13 @@ spring:
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true
-  # Static region fallback so the spring-cloud-aws SSM client can be constructed
-  # even locally (where it is never actually called). On Lambda, AWS_REGION is set.
   cloud:
     aws:
+      # Don't even create the SSM client locally: the dsql profile re-enables this
+      # (application-dsql.yml) so only Lambda talks to Parameter Store. The static
+      # region keeps the core region provider happy without an AWS lookup locally.
+      parameterstore:
+        enabled: false
       region:
         static: ${AWS_REGION:us-east-1}
 
