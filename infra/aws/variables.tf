@@ -5,7 +5,7 @@ variable "app_name" {
 
 variable "region" {
   type    = string
-  default = "us-east-1"
+  default = "ap-northeast-1"
 }
 
 # Path to the Lambda deployment package built by `./gradlew lambdaZip`.

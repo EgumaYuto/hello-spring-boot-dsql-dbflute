@@ -4,8 +4,9 @@ set -euo pipefail
 
 # --- configuration (override via environment if needed) -----------------------
 export AWS_PROFILE="${AWS_PROFILE:-sandbox}"
-# Aurora DSQL is only available in a subset of regions; us-east-1 is a safe default.
-REGION="${REGION:-us-east-1}"
+# Aurora DSQL is only available in a subset of regions; ap-northeast-1 (Tokyo) is
+# supported and is the default here (low latency from Japan).
+REGION="${REGION:-ap-northeast-1}"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 INFRA_DIR="$ROOT/infra/aws"
