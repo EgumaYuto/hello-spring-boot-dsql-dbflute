@@ -21,7 +21,7 @@ fun main() {
     val url = System.getenv("DSQL_JDBC_URL")
         ?: error("DSQL_JDBC_URL env var is required, e.g. jdbc:aws-dsql:postgresql://<ep>:5432/postgres?user=admin")
 
-    val ddl = """
+    val usersDdl = """
         CREATE TABLE IF NOT EXISTS users (
             id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             name          VARCHAR(100) NOT NULL,
@@ -31,10 +31,24 @@ fun main() {
         )
     """.trimIndent()
 
+    // One DDL per statement (DSQL allows one DDL per transaction). user_id is a
+    // plain column (no FK/secondary index); the relationship is enforced in the app.
+    val todosDdl = """
+        CREATE TABLE IF NOT EXISTS todos (
+            id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+            user_id    UUID NOT NULL,
+            title      VARCHAR(500) NOT NULL,
+            done       BOOLEAN NOT NULL DEFAULT false,
+            created_at TIMESTAMPTZ DEFAULT now()
+        )
+    """.trimIndent()
+
     println("Connecting to: ${url.substringBefore('?')}")
     DriverManager.getConnection(url).use { conn ->
-        conn.createStatement().use { it.execute(ddl) }
+        conn.createStatement().use { it.execute(usersDdl) }
         println("OK: users table is present.")
+        conn.createStatement().use { it.execute(todosDdl) }
+        println("OK: todos table is present.")
 
         // Optional: insert one sample row when DSQL_SEED=1 (handy for the demo).
         if (System.getenv("DSQL_SEED") == "1") {
