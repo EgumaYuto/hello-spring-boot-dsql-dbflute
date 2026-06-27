@@ -80,7 +80,12 @@ schema (similar in spirit to jOOQ's codegen). Setup here:
 ## Local development
 
 Aurora DSQL has no local emulator, so locally we use a plain PostgreSQL container
-(it's wire-compatible enough for migrations and DBFlute code generation).
+(it's wire-compatible enough for schema setup and DBFlute code generation).
+
+The local schema is initialized with **DBFlute ReplaceSchema** (drop + recreate from
+[`dbflute_hellodb/playsql/replace-schema.sql`](dbflute_hellodb/playsql/replace-schema.sql)).
+Flyway is disabled locally (`spring.flyway.enabled: false`); the `db/migration` files
+are kept for reference, and DSQL is provisioned separately by `dsqlInit`.
 
 ```bash
 $ docker compose up -d
@@ -88,10 +93,11 @@ $ docker compose up -d
 # connect to local postgres (password: hellopassword)
 $ psql -h 127.0.0.1 -U hellouser -d hellodb
 
-# migration (creates the users table + password_hash column)
-$ ./gradlew flywayMigrate
+# initialize / reset the local DB (drops all tables, recreates users + todos).
+# LOCAL ONLY — never run against DSQL.
+$ ./scripts/dbflute-replace-schema.sh
 
-# generate DBFlute code from the migrated schema
+# generate DBFlute code from the schema
 # (downloads the engine into mydbflute/ on first run, then jdbc + generate)
 $ ./scripts/dbflute-generate.sh
 
@@ -107,7 +113,9 @@ $ curl http://127.0.0.1:8080/api/users   # -> 401 (now auth-protected)
 
 > The generated DBFlute sources under `src/main/java/org/example/dbflute/` are
 > committed, so the deployable build does not need a database or the engine.
-> Re-run `./scripts/dbflute-generate.sh` after changing a migration.
+> After a schema change, update `playsql/replace-schema.sql` (and, for DSQL,
+> `db/migration` + `DbInit.kt`), then re-run replace-schema and
+> `./scripts/dbflute-generate.sh`.
 
 ## Web app: React frontend + JWT login
 

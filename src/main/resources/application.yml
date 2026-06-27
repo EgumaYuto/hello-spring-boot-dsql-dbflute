@@ -8,7 +8,11 @@ spring:
     password: hellopassword
     driver-class-name: org.postgresql.Driver
   flyway:
-    enabled: true
+    # Local schema is initialized by DBFlute ReplaceSchema (./scripts/dbflute-replace-schema.sh),
+    # so Flyway is disabled here to avoid two tools managing the same tables. The
+    # migration files under db/migration are kept for reference. (DSQL already has
+    # flyway disabled and is provisioned by the dsqlInit task.)
+    enabled: false
   cloud:
     aws:
       # Don't even create the SSM client locally: the dsql profile re-enables this
