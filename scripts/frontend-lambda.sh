@@ -16,12 +16,14 @@ cd "$(dirname "$0")/.."
 URL="$(terraform -chdir=infra/aws output -raw function_url)"
 URL="${URL%/}" # strip trailing slash for use as a proxy target origin
 
-echo "[frontend-lambda] proxying /api -> $URL"
+echo "[frontend-lambda] UI on http://localhost:5174  (/api -> $URL)"
 
 if [ ! -d frontend/node_modules ]; then
   echo "[frontend-lambda] installing frontend deps..."
   (cd frontend && npm install)
 fi
 
+# Runs on :5174 (npm run dev:lambda) so it won't clash with the local-backend
+# dev server on :5173.
 cd frontend
 API_TARGET="$URL" npm run dev:lambda

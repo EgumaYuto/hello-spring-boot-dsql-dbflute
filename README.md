@@ -161,11 +161,13 @@ hosting on AWS required. The Vite proxy target is configurable via `API_TARGET`;
 `scripts/frontend-lambda.sh` fills it from the Terraform `function_url` output:
 
 ```bash
-$ ./scripts/frontend-lambda.sh   # Vite on :5173, /api -> deployed Function URL
+$ ./scripts/frontend-lambda.sh   # Vite on :5174, /api -> deployed Function URL
 ```
 
-The browser still talks only to `localhost:5173` (Vite proxies server-side), so
-there is no CORS and the SPA is served by Vite with correct content types.
+It runs on **:5174** (vs the local-backend dev server on :5173) so you can run both
+at once. The browser still talks only to `localhost:5174` (Vite proxies
+server-side), so there is no CORS and the SPA is served by Vite with correct
+content types.
 
 ## Deploy to AWS (Aurora DSQL + Lambda) — API only
 
