@@ -1,0 +1,19 @@
+map:{
+    ; 2026/06/27 16:43:46.459 = map:{
+        ; diffDate = 2026/06/27 16:43:46.459
+        ; diffAuthor = yuto.eguma
+        ; diffGitBranch = main
+        ; tableDiff = map:{
+            ; users = map:{
+                ; tableName = users
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; password_hash = map:{
+                        ; columnName = password_hash
+                        ; diffType = ADD
+                    }
+                }
+            }
+        }
+    }
+}

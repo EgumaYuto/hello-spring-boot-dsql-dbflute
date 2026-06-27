@@ -187,8 +187,10 @@ gradle-app.setting
 
 ### DBFlute ###
 # Engine is large and regenerable; download it with scripts/dbflute-engine.sh
+# (kept out of git unlike the dbflute-example sample, to avoid a heavy engine commit).
 /mydbflute/
-# Per-run logs and generated SchemaXML / docs
+# DBFlute Intro (GUI client manager) working files.
+/dbflute-intro.*
+# Per-run logs only. schema/ (SchemaXML + SchemaDiff / decomment history) and
+# output/ (SchemaHTML / HistoryHTML) ARE committed, per the dbflute-example convention.
 /dbflute_hellodb/log/
-/dbflute_hellodb/schema/
-/dbflute_hellodb/output/

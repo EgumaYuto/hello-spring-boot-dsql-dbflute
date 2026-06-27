@@ -1,0 +1,17 @@
+map:{
+    ; 2026/06/27 22:15:39.370 = map:{
+        ; diffDate = 2026/06/27 22:15:39.370
+        ; tableCount = map:{
+            ; next = 2
+            ; previous = 1
+        }
+        ; diffAuthor = yuto.eguma
+        ; diffGitBranch = main
+        ; tableDiff = map:{
+            ; todos = map:{
+                ; tableName = todos
+                ; diffType = ADD
+            }
+        }
+    }
+}

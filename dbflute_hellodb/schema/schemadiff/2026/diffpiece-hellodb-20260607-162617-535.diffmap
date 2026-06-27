@@ -1,0 +1,16 @@
+map:{
+    ; 2026/06/07 16:26:17.535 = map:{
+        ; diffDate = 2026/06/07 16:26:17.535
+        ; tableCount = map:{
+            ; next = 1
+            ; previous = 2
+        }
+        ; diffAuthor = yuto.eguma
+        ; tableDiff = map:{
+            ; flyway_schema_history = map:{
+                ; tableName = flyway_schema_history
+                ; diffType = DELETE
+            }
+        }
+    }
+}
