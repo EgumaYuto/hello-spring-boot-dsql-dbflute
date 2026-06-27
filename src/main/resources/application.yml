@@ -9,10 +9,16 @@ spring:
     driver-class-name: org.postgresql.Driver
   flyway:
     enabled: true
+  # Static region fallback so the spring-cloud-aws SSM client can be constructed
+  # even locally (where it is never actually called). On Lambda, AWS_REGION is set.
+  cloud:
+    aws:
+      region:
+        static: ${AWS_REGION:us-east-1}
 
-# JWT signing config. The dev secret below is only for local development;
-# override it in production via the APP_JWT_SECRET environment variable
-# (must be at least 32 bytes for HS256).
+# JWT signing config. The dev secret below is only for local development; on AWS
+# (the `dsql` profile) it is overridden by a random value read from SSM Parameter
+# Store (see application-dsql.yml).
 app:
   jwt:
     secret: ${APP_JWT_SECRET:dev-local-secret-change-me-please-32bytes-minimum}

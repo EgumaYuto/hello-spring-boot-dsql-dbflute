@@ -116,8 +116,10 @@ sign-up / login flow and a protected page (the user list). Auth is **stateless
 JWT**: `POST /api/auth/login` (or `/register`) returns a token, the SPA stores it
 in `localStorage` and sends it as `Authorization: Bearer <token>`; everything
 under `/api/**` except `/api/auth/**` requires a valid token. The token-issuing
-secret is `app.jwt.secret` in `application.yml` (override via `APP_JWT_SECRET` in
-production). Passwords are stored as BCrypt hashes in `users.password_hash`.
+secret is `app.jwt.secret`: locally it falls back to a dev default in
+`application.yml`, and on AWS (the `dsql` profile) it is a random value read from
+**SSM Parameter Store** at startup (see "JWT secret" below). Passwords are stored
+as BCrypt hashes in `users.password_hash`.
 
 ### Run both locally
 
@@ -202,6 +204,17 @@ $ TOKEN=$(curl -s -X POST https://<function-url>/api/auth/register \
 $ curl https://<function-url>/api/users -H "Authorization: Bearer $TOKEN"
 ```
 
+### JWT secret (SSM Parameter Store)
+
+The HS512 signing secret is **not** in the repo or in the function's env vars. Terraform
+generates a random 64-char value (`random_password`) and stores it as an SSM
+**SecureString** at `/<app_name>/jwt-secret`. The Lambda reads it at startup via
+spring-cloud-aws (`spring.config.import: aws-parameterstore:/<app_name>/` in
+`application-dsql.yml`), granted `ssm:GetParametersByPath` + `kms:Decrypt` by its role.
+A `JWT_SECRET_VERSION` env var (bound to the parameter version) forces a new
+deployment/cold start when the secret rotates, so the app re-reads it. Locally the
+`dsql` profile is inactive, so no AWS call is made and the dev default is used.
+
 ### Why the SPA isn't served from Lambda
 
 We tried bundling the built SPA into the Lambda and serving it via the Function
@@ -235,7 +248,9 @@ A single Terraform stack (`infra/aws/`, local state):
 - `aws_lambda_function` (Java 21) running Spring Boot via
   `aws-serverless-java-container`, packaged as a zip (`./gradlew lambdaZip`).
 - `aws_lambda_function_url` — public URL (`AuthType: NONE`) serving the JSON API.
-- IAM role granting the Lambda `dsql:DbConnectAdmin` on the cluster (no secrets).
+- IAM role granting the Lambda `dsql:DbConnectAdmin` on the cluster, plus
+  `ssm:GetParametersByPath` + `kms:Decrypt` to read the JWT secret.
+- `aws_ssm_parameter` (SecureString) holding the random JWT signing secret.
 - CloudWatch log group.
 
 ## Logs

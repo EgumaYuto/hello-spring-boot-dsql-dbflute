@@ -52,6 +52,12 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 
+    // Read the JWT secret from AWS SSM Parameter Store at startup (dsql profile on
+    // Lambda). spring.config.import=aws-parameterstore:... pulls it in; locally
+    // (default profile) no import happens, so no AWS call is made.
+    implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.3.0"))
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-parameter-store")
+
     // --- O/R mapper: DBFlute ---------------------------------------------------
     // Runtime for the generated Behavior/Entity/ConditionBean classes (generated
     // under src/main/java/org/example/dbflute by `scripts/dbflute-generate.sh`).
