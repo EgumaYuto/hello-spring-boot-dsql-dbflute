@@ -36,6 +36,9 @@ public abstract class BsUsers extends AbstractEntity implements DomainEntity {
     /** created_at: {timestamptz(35, 6), default=[now()]} */
     protected java.time.LocalDateTime _createdAt;
 
+    /** password_hash: {varchar(255)} */
+    protected String _passwordHash;
+
     // ===================================================================================
     //                                                                             DB Meta
     //                                                                             =======
@@ -102,6 +105,7 @@ public abstract class BsUsers extends AbstractEntity implements DomainEntity {
         sb.append(dm).append(xfND(_name));
         sb.append(dm).append(xfND(_email));
         sb.append(dm).append(xfND(_createdAt));
+        sb.append(dm).append(xfND(_passwordHash));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
         }
@@ -192,5 +196,23 @@ public abstract class BsUsers extends AbstractEntity implements DomainEntity {
     public void setCreatedAt(java.time.LocalDateTime createdAt) {
         registerModifiedProperty("createdAt");
         _createdAt = createdAt;
+    }
+
+    /**
+     * [get] password_hash: {varchar(255)} <br>
+     * @return The value of the column 'password_hash'. (NullAllowed even if selected: for no constraint)
+     */
+    public String getPasswordHash() {
+        checkSpecifiedProperty("passwordHash");
+        return _passwordHash;
+    }
+
+    /**
+     * [set] password_hash: {varchar(255)} <br>
+     * @param passwordHash The value of the column 'password_hash'. (NullAllowed: null update allowed for no constraint)
+     */
+    public void setPasswordHash(String passwordHash) {
+        registerModifiedProperty("passwordHash");
+        _passwordHash = passwordHash;
     }
 }

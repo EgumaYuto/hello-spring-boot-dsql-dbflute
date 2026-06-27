@@ -153,6 +153,26 @@ public class BsUsersCQ extends AbstractBsUsersCQ {
      */
     public BsUsersCQ addOrderBy_CreatedAt_Desc() { regOBD("created_at"); return this; }
 
+    protected ConditionValue _passwordHash;
+    public ConditionValue xdfgetPasswordHash()
+    { if (_passwordHash == null) { _passwordHash = nCV(); }
+      return _passwordHash; }
+    protected ConditionValue xgetCValuePasswordHash() { return xdfgetPasswordHash(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * password_hash: {varchar(255)}
+     * @return this. (NotNull)
+     */
+    public BsUsersCQ addOrderBy_PasswordHash_Asc() { regOBA("password_hash"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * password_hash: {varchar(255)}
+     * @return this. (NotNull)
+     */
+    public BsUsersCQ addOrderBy_PasswordHash_Desc() { regOBD("password_hash"); return this; }
+
     // ===================================================================================
     //                                                             SpecifiedDerivedOrderBy
     //                                                             =======================

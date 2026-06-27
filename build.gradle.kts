@@ -42,6 +42,16 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-starter-tomcat")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
 
+    // --- Authentication: Spring Security + JWT -------------------------------
+    // Security provides the BCrypt password encoder and the stateless filter
+    // chain; JWT (jjwt) carries the authenticated identity so no server-side
+    // session is needed (fits the Lambda + DSQL stateless model).
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("io.jsonwebtoken:jjwt-api:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
+
     // --- O/R mapper: DBFlute ---------------------------------------------------
     // Runtime for the generated Behavior/Entity/ConditionBean classes (generated
     // under src/main/java/org/example/dbflute by `scripts/dbflute-generate.sh`).

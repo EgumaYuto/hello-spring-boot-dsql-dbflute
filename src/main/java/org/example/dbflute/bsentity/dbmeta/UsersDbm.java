@@ -46,6 +46,7 @@ public class UsersDbm extends AbstractDBMeta {
         setupEpg(_epgMap, et -> ((Users)et).getName(), (et, vl) -> ((Users)et).setName((String)vl), "name");
         setupEpg(_epgMap, et -> ((Users)et).getEmail(), (et, vl) -> ((Users)et).setEmail((String)vl), "email");
         setupEpg(_epgMap, et -> ((Users)et).getCreatedAt(), (et, vl) -> ((Users)et).setCreatedAt(ctldt(vl)), "createdAt");
+        setupEpg(_epgMap, et -> ((Users)et).getPasswordHash(), (et, vl) -> ((Users)et).setPasswordHash((String)vl), "passwordHash");
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
@@ -70,6 +71,7 @@ public class UsersDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnName = cci("name", "name", null, null, String.class, "name", null, false, false, true, "varchar", 100, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnEmail = cci("email", "email", null, null, String.class, "email", null, false, false, true, "varchar", 255, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCreatedAt = cci("created_at", "created_at", null, null, java.time.LocalDateTime.class, "createdAt", null, false, false, false, "timestamptz", 35, 6, null, "now()", false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnPasswordHash = cci("password_hash", "password_hash", null, null, String.class, "passwordHash", null, false, false, false, "varchar", 255, 0, null, null, false, null, null, null, null, null, false);
 
     /**
      * id: {PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]}
@@ -91,6 +93,11 @@ public class UsersDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnCreatedAt() { return _columnCreatedAt; }
+    /**
+     * password_hash: {varchar(255)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnPasswordHash() { return _columnPasswordHash; }
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
@@ -98,6 +105,7 @@ public class UsersDbm extends AbstractDBMeta {
         ls.add(columnName());
         ls.add(columnEmail());
         ls.add(columnCreatedAt());
+        ls.add(columnPasswordHash());
         return ls;
     }
 
