@@ -1,0 +1,30 @@
+# SchemaPolicyCheck: enforce schema conventions at documentation time
+# (runs during manage.sh doc / regenerate / renewal). The current schema
+# (users, todos) is snake_case / lower-case with a UUID primary key, so the
+# enabled themes below pass. Add more as the schema grows.
+#
+# NOTE: list/map items must NOT have trailing inline "# ..." comments — DBFlute
+# treats the rest of the line as part of the value. Keep comments on their own lines.
+# Docs: https://dbflute.seasar.org/ja/manual/reference/dfprop/schemapolicy/
+map:{
+    ; tableExceptList = list:{}
+    ; tableTargetList = list:{}
+    ; columnExceptMap = map:{}
+    ; isMainSchemaOnly = false
+
+    ; wholeMap = map:{
+        ; themeList = list:{}
+    }
+
+    # every table must have a primary key, and table names are lower case
+    ; tableMap = map:{
+        ; themeList = list:{ hasPK ; lowerCaseBasis }
+        ; statementList = list:{}
+    }
+
+    # column names are lower case
+    ; columnMap = map:{
+        ; themeList = list:{ lowerCaseBasis }
+        ; statementList = list:{}
+    }
+}
