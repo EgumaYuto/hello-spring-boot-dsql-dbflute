@@ -97,9 +97,13 @@ $ ./scripts/dbflute-generate.sh
 
 # run the app locally (normal embedded Tomcat, default profile)
 $ ./gradlew bootRun
-$ curl http://127.0.0.1:8080/            # -> Hello World!
+$ curl http://127.0.0.1:8080/api/health  # -> Hello World!
 $ curl http://127.0.0.1:8080/api/users   # -> 401 (now auth-protected)
 ```
+
+> Note: locally the backend does NOT serve the SPA (`/` returns 404 on :8080) —
+> use the Vite dev server for the UI (see the next section). The SPA is only
+> bundled into the app for the AWS deployment.
 
 > The generated DBFlute sources under `src/main/java/org/example/dbflute/` are
 > committed, so the deployable build does not need a database or the engine.
@@ -149,7 +153,24 @@ $ curl -s http://127.0.0.1:8080/api/users -H "Authorization: Bearer $TOKEN"
 # -> [{"id":"...","name":"Ada","email":"ada@example.com"}]
 ```
 
-## Deploy to AWS (Aurora DSQL + Lambda)
+### Run the local frontend against the deployed Lambda API
+
+Once the API is deployed to AWS (below), you can keep developing the SPA locally
+but have its `/api` calls hit the **real Aurora DSQL + Lambda** backend — no SPA
+hosting on AWS required. The Vite proxy target is configurable via `API_TARGET`;
+`scripts/frontend-lambda.sh` fills it from the Terraform `function_url` output:
+
+```bash
+$ ./scripts/frontend-lambda.sh   # Vite on :5173, /api -> deployed Function URL
+```
+
+The browser still talks only to `localhost:5173` (Vite proxies server-side), so
+there is no CORS and the SPA is served by Vite with correct content types.
+
+## Deploy to AWS (Aurora DSQL + Lambda) — API only
+
+The Lambda hosts the **JSON API only** (see "Why the SPA isn't served from Lambda"
+below). Run the React UI locally against it with `./scripts/frontend-lambda.sh`.
 
 Prerequisites:
 - A valid AWS profile. Override with `AWS_PROFILE=...` (default `sandbox`). An
@@ -161,24 +182,48 @@ Prerequisites:
   auto-provisions a 21 toolchain (the DSQL support artifacts require Java 21).
 
 ```bash
-$ ./scripts/deploy.sh     # build zip -> terraform apply -> dsqlInit, prints the Function URL
+$ ./scripts/deploy.sh     # build zip -> terraform apply -> dsqlInit
 $ ./scripts/teardown.sh   # destroys everything to stop charges
 ```
 
 After `deploy.sh` (the first request is a cold start):
 
 ```bash
-$ curl https://<function-url>/        # -> Hello World!
-$ curl https://<function-url>/user    # -> [] (reads the Aurora DSQL users table)
+$ curl  https://<function-url>/api/health  # -> Hello World!  (quick health check)
+$ curl  https://<function-url>/api/users   # -> 401 (auth required)
+
+# register/login to get a token, then read the protected endpoint:
+$ TOKEN=$(curl -s -X POST https://<function-url>/api/auth/register \
+    -H 'Content-Type: application/json' \
+    -d '{"name":"Ada","email":"ada@example.com","password":"secret123"}' \
+    | sed -n 's/.*"token":"\([^"]*\)".*/\1/p')
+$ curl https://<function-url>/api/users -H "Authorization: Bearer $TOKEN"
 ```
 
-Seed a sample row to see it round-trip through DSQL:
+### Why the SPA isn't served from Lambda
 
-```bash
-$ DSQL_SEED=1 DSQL_JDBC_URL="jdbc:aws-dsql:postgresql://<endpoint>:5432/postgres?user=admin" \
-    ./gradlew dsqlInit
-$ curl https://<function-url>/user    # -> [{"id":"...","name":"Ada","email":"ada@example.com"}]
-```
+We tried bundling the built SPA into the Lambda and serving it via the Function
+URL (single origin, zero extra infra). The **API works**, but **static assets come
+back as `application/json`**: `aws-serverless-java-container` builds the response
+with `multiValueHeaders` only, while a Lambda **Function URL** (payload v2) reads
+single-value `headers`, so the `Content-Type` Spring sets (text/html, JS, CSS) is
+dropped and the platform defaults it to `application/json`. Browsers then refuse to
+run the JS module / render the HTML. It's a container/Function-URL limitation, not
+fixable from app code.
+
+Getting the **JWT API** working under the serverless container also required three
+fixes (kept in `SecurityConfig` / `JwtAuthenticationFilter`):
+- `requestMatchers(antMatcher(...))` instead of String patterns — the container's
+  servlet `getMappings()` returns `null`, which NPEs Spring Security's default
+  servlet-mapping introspection.
+- The JWT filter is constructed in `SecurityConfig` (not a `@Component`), so it is
+  not also auto-registered as a top-level servlet filter — that copy ran before
+  `SecurityContextHolderFilter`, which then discarded the authentication.
+- `sessionManagement { sessionFixation { none() } }` — the container has no real
+  HTTP session, so `request.changeSessionId()` threw `UnsupportedOperationException`.
+
+For a production-shaped static frontend, put the SPA on **S3 + CloudFront** and
+route `/api/*` to the Function URL (correct content types, HTTPS, still ~$0 idle).
 
 ## What's deployed
 
@@ -187,7 +232,7 @@ A single Terraform stack (`infra/aws/`, local state):
 - `aws_dsql_cluster` — the serverless database.
 - `aws_lambda_function` (Java 21) running Spring Boot via
   `aws-serverless-java-container`, packaged as a zip (`./gradlew lambdaZip`).
-- `aws_lambda_function_url` — public URL (`AuthType: NONE`) for easy `curl`.
+- `aws_lambda_function_url` — public URL (`AuthType: NONE`) serving the JSON API.
 - IAM role granting the Lambda `dsql:DbConnectAdmin` on the cluster (no secrets).
 - CloudWatch log group.
 

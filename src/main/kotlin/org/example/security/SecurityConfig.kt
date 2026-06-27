@@ -1,6 +1,7 @@
 package org.example.security
 
 import jakarta.servlet.DispatcherType
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
@@ -17,7 +18,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 class SecurityConfig(
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+    private val jwtService: JwtService
 ) {
 
     @Bean
@@ -26,7 +27,15 @@ class SecurityConfig(
             // Stateless JWT API: no CSRF tokens, no server-side session.
             .csrf { it.disable() }
             .cors { it.configurationSource(corsConfigurationSource()) }
-            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
+            .sessionManagement {
+                it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // The serverless servlet has no real HTTP session. Without this,
+                // when our JWT filter authenticates mid-request the
+                // SessionManagementFilter applies session-fixation protection and
+                // calls request.changeSessionId(), which throws
+                // UnsupportedOperationException under the serverless container.
+                it.sessionFixation { fixation -> fixation.none() }
+            }
             // Return 401 (not 403) when an anonymous request hits a protected resource.
             .exceptionHandling { it.authenticationEntryPoint(HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)) }
             .authorizeHttpRequests {
@@ -34,12 +43,20 @@ class SecurityConfig(
                 // (e.g. 400 validation, 409 duplicate email) render their real status
                 // instead of being blocked at /error and turning into 403.
                 it.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-                // Public: health root and the auth endpoints (register/login/me).
-                it.requestMatchers("/", "/api/auth/**").permitAll()
+                // Use explicit antMatcher(...) rather than String patterns: under the
+                // serverless container (aws-serverless-java-container) the registered
+                // servlet's getMappings() returns null, and Spring Security's default
+                // String-pattern matching introspects servlet mappings on first request
+                // and throws NPE. antMatcher(...) skips that servlet introspection.
+                // Public API: auth endpoints (register/login/me) and the health check.
+                it.requestMatchers(antMatcher("/api/auth/**"), antMatcher("/api/health")).permitAll()
                 // Everything else (e.g. /api/users) requires a valid JWT.
                 it.anyRequest().authenticated()
             }
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(
+                JwtAuthenticationFilter(jwtService),
+                UsernamePasswordAuthenticationFilter::class.java
+            )
         return http.build()
     }
 

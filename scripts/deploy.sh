@@ -7,6 +7,11 @@
 # Aurora DSQL is serverless (scales to zero) and Lambda is pay-per-request, so
 # there is NO VPC / NAT / ALB and idle cost is ~$0.
 #
+# Deploys the JSON API only. The React frontend is NOT served from Lambda (the
+# serverless container can't return correct content types for a browser SPA over a
+# Function URL — see README); run it locally pointed at this API with
+# ./scripts/frontend-lambda.sh.
+#
 # Prerequisites:
 #   - AWS profile valid (override with AWS_PROFILE=...), region supports DSQL
 #   - JDK to launch Gradle (build targets Java 21; the wrapper provisions it)
@@ -35,8 +40,8 @@ log "Provisioning DSQL schema ($ENDPOINT)"
     ./gradlew dsqlInit --console=plain )
 
 URL="$(tf output -raw function_url)"
-log "Deployed."
-echo "    curl ${URL}        # -> Hello World!"
-echo "    curl ${URL}user    # -> [] (reads the Aurora DSQL users table)"
+log "Deployed (API only)."
+echo "    curl  ${URL}api/health    # -> Hello World! (quick health check)"
+echo "    ./scripts/frontend-lambda.sh   # run the React UI locally against this API"
 echo
 echo "Note: the first request is a JVM/Spring Boot cold start and may take a few seconds."
