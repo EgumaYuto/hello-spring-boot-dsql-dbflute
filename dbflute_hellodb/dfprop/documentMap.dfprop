@@ -1,0 +1,8 @@
+# Settings for DBFlute documents (SchemaHTML / HistoryHTML, etc.).
+# Empty map = all defaults (same behavior as before this file existed). It is present
+# so DBFlute Intro, which expects the standard dfprop set, can load this client.
+map:{
+    # ; aliasDelimiterInDbComment = :
+    # ; isDbCommentOnAliasBasis = false
+    # ; isSuppressSchemaHtmlOutsideSql = false
+}
