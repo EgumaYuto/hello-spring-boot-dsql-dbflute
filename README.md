@@ -180,8 +180,8 @@ Prerequisites:
 - A valid AWS profile. Override with `AWS_PROFILE=...` (default `sandbox`). An
   assume-role profile is fine — `dsqlInit` puts `software.amazon.awssdk:sts` on
   its (local-only) classpath so the SDK can resolve it.
-- A region where **Aurora DSQL is available** (default `us-east-1`; override with
-  `REGION=...`). DSQL is not yet in every region.
+- A region where **Aurora DSQL is available** (default `ap-northeast-1` / Tokyo;
+  override with `REGION=...`). DSQL is not yet in every region.
 - A JDK to launch Gradle (17+); the build targets Java 21 and Gradle
   auto-provisions a 21 toolchain (the DSQL support artifacts require Java 21).
 
