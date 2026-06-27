@@ -24,6 +24,10 @@ resource "aws_lambda_function" "app" {
       MAIN_CLASS             = "org.example.MyApplication"
       SPRING_PROFILES_ACTIVE = "dsql"
       SPRING_DATASOURCE_URL  = local.dsql_jdbc_url
+      # Not read by the app: bumping this with the SSM secret version forces a new
+      # function deployment (and cold start) whenever the JWT secret rotates, so the
+      # app re-reads it from Parameter Store.
+      JWT_SECRET_VERSION = tostring(aws_ssm_parameter.jwt_secret.version)
       # Trim JIT work to shave a little off cold starts.
       JAVA_TOOL_OPTIONS = "-XX:+TieredCompilation -XX:TieredStopAtLevel=1"
     }

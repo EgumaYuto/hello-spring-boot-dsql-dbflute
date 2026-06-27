@@ -14,6 +14,11 @@ logging:
       console: ecs
 
 spring:
+  # Load the JWT secret (and any other params) from SSM Parameter Store at startup.
+  # The Lambda execution role is granted ssm:GetParameter + kms:Decrypt (see
+  # infra/aws/iam.tf). Only the dsql profile imports this, so local dev never calls AWS.
+  config:
+    import: aws-parameterstore:/hello-spring-boot-dsql-dbflute/
   datasource:
     username: admin
     driver-class-name: software.amazon.dsql.jdbc.DSQLConnector
@@ -29,3 +34,9 @@ spring:
     # a Lambda cold start. Instead the schema is provisioned out-of-band once with
     # the `dsqlInit` Gradle task (plain JDBC, single DDL, no secondary index).
     enabled: false
+
+# Override the JWT signing secret with the random value from SSM (imported above
+# as the `jwt-secret` property). Never falls back to the dev default on Lambda.
+app:
+  jwt:
+    secret: ${jwt-secret}

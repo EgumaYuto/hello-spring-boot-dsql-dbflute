@@ -7,6 +7,10 @@ terraform {
       # aws_dsql_cluster is available from provider v5.80+.
       version = ">= 5.80"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = ">= 3.0"
+    }
   }
 
   # Local state on purpose: this is a throwaway sandbox for trying out Aurora DSQL.
