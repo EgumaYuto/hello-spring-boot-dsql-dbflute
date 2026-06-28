@@ -9,7 +9,7 @@ export AWS_PROFILE="${AWS_PROFILE:-sandbox}"
 REGION="${REGION:-ap-northeast-1}"
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-INFRA_DIR="$ROOT/infra/aws"
+INFRA_DIR="$ROOT/infra/dev"
 LAMBDA_ZIP="$ROOT/build/dist/function.zip"
 
 # --- helpers ------------------------------------------------------------------

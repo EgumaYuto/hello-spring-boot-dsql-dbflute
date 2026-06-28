@@ -13,7 +13,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-URL="$(terraform -chdir=infra/aws output -raw function_url)"
+URL="$(terraform -chdir=infra/dev output -raw function_url)"
 URL="${URL%/}" # strip trailing slash for use as a proxy target origin
 
 echo "[frontend-lambda] UI on http://localhost:5174  (/api -> $URL)"

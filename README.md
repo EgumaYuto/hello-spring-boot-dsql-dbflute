@@ -248,9 +248,20 @@ fixes (kept in `SecurityConfig` / `JwtAuthenticationFilter`):
 For a production-shaped static frontend, put the SPA on **S3 + CloudFront** and
 route `/api/*` to the Function URL (correct content types, HTTPS, still ~$0 idle).
 
-## What's deployed
+## Environments / Terraform stacks
 
-A single Terraform stack (`infra/aws/`, local state):
+Two independent Terraform stacks (each with its own local state):
+
+- **dev** (`infra/dev/`) — the full app: DSQL + Lambda + Function URL + SSM + IAM +
+  CloudWatch. Managed by `./scripts/deploy.sh` / `./scripts/teardown.sh`.
+- **local** (`infra/local/`) — a **DSQL-only** cluster a developer spins up to run
+  DBFlute AlterCheck against real DSQL constraints (no Lambda etc.). Managed by
+  `./scripts/local-dsql.sh up|url|down`. (Wiring DBFlute AlterCheck to connect to this
+  DSQL is a follow-up; for now the stack just provisions the cluster + prints its JDBC URL.)
+
+## What's deployed (dev)
+
+The `infra/dev/` stack:
 
 - `aws_dsql_cluster` — the serverless database.
 - `aws_lambda_function` (Java 21) running Spring Boot via
