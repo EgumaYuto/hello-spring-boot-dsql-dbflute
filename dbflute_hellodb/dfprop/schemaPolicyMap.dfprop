@@ -28,7 +28,7 @@ map:{
     ; columnMap = map:{
         ; themeList = list:{ lowerCaseBasis }
         ; statementList = list:{
-            ; if column is fk then bad
+            ; if column is fk then bad => Aurora DSQL does not support foreign keys, so remove the FK and enforce the relation in app code
             ; if columnName is suffix:_at then dbType is prefix:timestamp
             ; if column is pk then columnName is id
             ; if column is pk then dbType is uuid
