@@ -3,10 +3,13 @@ package org.example.dbflute.bsentity;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.dbflute.Entity;
 import org.dbflute.dbmeta.DBMeta;
 import org.dbflute.dbmeta.AbstractEntity;
 import org.dbflute.dbmeta.accessory.DomainEntity;
+import org.dbflute.optional.OptionalEntity;
 import org.example.dbflute.allcommon.DBMetaInstanceHandler;
+import org.example.dbflute.allcommon.CDef;
 import org.example.dbflute.exentity.*;
 
 /**
@@ -33,8 +36,8 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
     /** title: {NotNull, varchar(500)} */
     protected String _title;
 
-    /** done: {NotNull, bool(1), default=[false]} */
-    protected Boolean _done;
+    /** status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} */
+    protected String _status;
 
     /** created_at: {timestamptz(35, 6), default=[now()]} */
     protected java.time.LocalDateTime _createdAt;
@@ -62,8 +65,116 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
     }
 
     // ===================================================================================
+    //                                                             Classification Property
+    //                                                             =======================
+    /**
+     * Get the value of status as the classification of TodoStatus. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} <br>
+     * TODO status
+     * <p>It's treated as case insensitive and if the code value is null, it returns null.</p>
+     * @return The instance of classification definition (as ENUM type). (NullAllowed: when the column value is null)
+     */
+    public CDef.TodoStatus getStatusAsTodoStatus() {
+        return CDef.TodoStatus.of(getStatus()).orElse(null);
+    }
+
+    /**
+     * Set the value of status as the classification of TodoStatus. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} <br>
+     * TODO status
+     * @param cdef The instance of classification definition (as ENUM type). (NullAllowed: if null, null value is set to the column)
+     */
+    public void setStatusAsTodoStatus(CDef.TodoStatus cdef) {
+        setStatus(cdef != null ? cdef.code() : null);
+    }
+
+    // ===================================================================================
+    //                                                              Classification Setting
+    //                                                              ======================
+    /**
+     * Set the value of status as ToDo (TODO). <br>
+     * To Do
+     */
+    public void setStatus_ToDo() {
+        setStatusAsTodoStatus(CDef.TodoStatus.ToDo);
+    }
+
+    /**
+     * Set the value of status as Doing (DOING). <br>
+     * Doing
+     */
+    public void setStatus_Doing() {
+        setStatusAsTodoStatus(CDef.TodoStatus.Doing);
+    }
+
+    /**
+     * Set the value of status as Done (DONE). <br>
+     * Done
+     */
+    public void setStatus_Done() {
+        setStatusAsTodoStatus(CDef.TodoStatus.Done);
+    }
+
+    // ===================================================================================
+    //                                                        Classification Determination
+    //                                                        ============================
+    /**
+     * Is the value of status ToDo? <br>
+     * To Do
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isStatusToDo() {
+        CDef.TodoStatus cdef = getStatusAsTodoStatus();
+        return cdef != null ? cdef.equals(CDef.TodoStatus.ToDo) : false;
+    }
+
+    /**
+     * Is the value of status Doing? <br>
+     * Doing
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isStatusDoing() {
+        CDef.TodoStatus cdef = getStatusAsTodoStatus();
+        return cdef != null ? cdef.equals(CDef.TodoStatus.Doing) : false;
+    }
+
+    /**
+     * Is the value of status Done? <br>
+     * Done
+     * <p>It's treated as case insensitive and if the code value is null, it returns false.</p>
+     * @return The determination, true or false.
+     */
+    public boolean isStatusDone() {
+        CDef.TodoStatus cdef = getStatusAsTodoStatus();
+        return cdef != null ? cdef.equals(CDef.TodoStatus.Done) : false;
+    }
+
+    // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================
+    /** cls_todo_status by my status, named 'clsTodoStatus'. */
+    protected OptionalEntity<ClsTodoStatus> _clsTodoStatus;
+
+    /**
+     * [get] cls_todo_status by my status, named 'clsTodoStatus'. <br>
+     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
+     * @return The entity of foreign property 'clsTodoStatus'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     */
+    public OptionalEntity<ClsTodoStatus> getClsTodoStatus() {
+        if (_clsTodoStatus == null) { _clsTodoStatus = OptionalEntity.relationEmpty(this, "clsTodoStatus"); }
+        return _clsTodoStatus;
+    }
+
+    /**
+     * [set] cls_todo_status by my status, named 'clsTodoStatus'.
+     * @param clsTodoStatus The entity of foreign property 'clsTodoStatus'. (NullAllowed)
+     */
+    public void setClsTodoStatus(OptionalEntity<ClsTodoStatus> clsTodoStatus) {
+        _clsTodoStatus = clsTodoStatus;
+    }
+
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
@@ -95,7 +206,13 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
 
     @Override
     protected String doBuildStringWithRelation(String li) {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        if (_clsTodoStatus != null && _clsTodoStatus.isPresent())
+        { sb.append(li).append(xbRDS(_clsTodoStatus, "clsTodoStatus")); }
+        return sb.toString();
+    }
+    protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
+        return et.get().buildDisplayString(name, true, true);
     }
 
     @Override
@@ -104,7 +221,7 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
         sb.append(dm).append(xfND(_id));
         sb.append(dm).append(xfND(_userId));
         sb.append(dm).append(xfND(_title));
-        sb.append(dm).append(xfND(_done));
+        sb.append(dm).append(xfND(_status));
         sb.append(dm).append(xfND(_createdAt));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
@@ -115,7 +232,13 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
 
     @Override
     protected String doBuildRelationString(String dm) {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        if (_clsTodoStatus != null && _clsTodoStatus.isPresent())
+        { sb.append(dm).append("clsTodoStatus"); }
+        if (sb.length() > dm.length()) {
+            sb.delete(0, dm.length()).insert(0, "(").append(")");
+        }
+        return sb.toString();
     }
 
     @Override
@@ -128,6 +251,8 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
     //                                                                            ========
     /**
      * [get] id: {PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]} <br>
+     * shalias:{}<br>
+     * 絡むコメント
      * @return The value of the column 'id'. (basically NotNull if selected: for the constraint)
      */
     public java.util.UUID getId() {
@@ -137,6 +262,8 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
 
     /**
      * [set] id: {PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]} <br>
+     * shalias:{}<br>
+     * 絡むコメント
      * @param id The value of the column 'id'. (basically NotNull if update: for the constraint)
      */
     public void setId(java.util.UUID id) {
@@ -181,21 +308,22 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
     }
 
     /**
-     * [get] done: {NotNull, bool(1), default=[false]} <br>
-     * @return The value of the column 'done'. (basically NotNull if selected: for the constraint)
+     * [get] status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} <br>
+     * @return The value of the column 'status'. (basically NotNull if selected: for the constraint)
      */
-    public Boolean getDone() {
-        checkSpecifiedProperty("done");
-        return _done;
+    public String getStatus() {
+        checkSpecifiedProperty("status");
+        return _status;
     }
 
     /**
-     * [set] done: {NotNull, bool(1), default=[false]} <br>
-     * @param done The value of the column 'done'. (basically NotNull if update: for the constraint)
+     * [set] status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} <br>
+     * @param status The value of the column 'status'. (basically NotNull if update: for the constraint)
      */
-    public void setDone(Boolean done) {
-        registerModifiedProperty("done");
-        _done = done;
+    protected void setStatus(String status) {
+        checkClassificationCode("status", CDef.DefMeta.TodoStatus, status);
+        registerModifiedProperty("status");
+        _status = status;
     }
 
     /**
@@ -214,5 +342,13 @@ public abstract class BsTodos extends AbstractEntity implements DomainEntity {
     public void setCreatedAt(java.time.LocalDateTime createdAt) {
         registerModifiedProperty("createdAt");
         _createdAt = createdAt;
+    }
+
+    /**
+     * For framework so basically DON'T use this method.
+     * @param status The value of the column 'status'. (basically NotNull if update: for the constraint)
+     */
+    public void mynativeMappingStatus(String status) {
+        setStatus(status);
     }
 }

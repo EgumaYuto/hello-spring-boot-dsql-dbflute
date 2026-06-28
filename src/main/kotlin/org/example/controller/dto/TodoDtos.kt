@@ -10,7 +10,11 @@ data class CreateTodoRequest(
 )
 
 data class UpdateTodoRequest(
-    val done: Boolean
+    @field:NotBlank
+    val status: String
 )
 
-data class TodoResponse(val id: String, val title: String, val done: Boolean)
+data class TodoResponse(val id: String, val title: String, val status: String)
+
+// One entry of the TodoStatus classification (for the frontend's status selector).
+data class TodoStatusResponse(val code: String, val name: String)

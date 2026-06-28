@@ -233,16 +233,147 @@ public abstract class AbstractBsTodosCQ extends AbstractConditionQuery {
     protected abstract ConditionValue xgetCValueTitle();
 
     /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * done: {NotNull, bool(1), default=[false]}
-     * @param done The value of done as equal. (basically NotNull: error as default, or no condition as option)
+     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus}
+     * @param status The value of status as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setDone_Equal(Boolean done) {
-        regDone(CK_EQ, done);
+    protected void setStatus_Equal(String status) {
+        doSetStatus_Equal(fRES(status));
     }
 
-    protected void regDone(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDone(), "done"); }
-    protected abstract ConditionValue xgetCValueDone();
+    /**
+     * Equal(=). As TodoStatus. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} <br>
+     * TODO status
+     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
+     */
+    public void setStatus_Equal_AsTodoStatus(CDef.TodoStatus cdef) {
+        doSetStatus_Equal(cdef != null ? cdef.code() : null);
+    }
+
+    /**
+     * Equal(=). As ToDo (TODO). And OnlyOnceRegistered. <br>
+     * To Do
+     */
+    public void setStatus_Equal_ToDo() {
+        setStatus_Equal_AsTodoStatus(CDef.TodoStatus.ToDo);
+    }
+
+    /**
+     * Equal(=). As Doing (DOING). And OnlyOnceRegistered. <br>
+     * Doing
+     */
+    public void setStatus_Equal_Doing() {
+        setStatus_Equal_AsTodoStatus(CDef.TodoStatus.Doing);
+    }
+
+    /**
+     * Equal(=). As Done (DONE). And OnlyOnceRegistered. <br>
+     * Done
+     */
+    public void setStatus_Equal_Done() {
+        setStatus_Equal_AsTodoStatus(CDef.TodoStatus.Done);
+    }
+
+    protected void doSetStatus_Equal(String status) {
+        regStatus(CK_EQ, status);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus}
+     * @param status The value of status as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    protected void setStatus_NotEqual(String status) {
+        doSetStatus_NotEqual(fRES(status));
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As TodoStatus. And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} <br>
+     * TODO status
+     * @param cdef The instance of classification definition (as ENUM type). (basically NotNull: error as default, or no condition as option)
+     */
+    public void setStatus_NotEqual_AsTodoStatus(CDef.TodoStatus cdef) {
+        doSetStatus_NotEqual(cdef != null ? cdef.code() : null);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As ToDo (TODO). And OnlyOnceRegistered. <br>
+     * To Do
+     */
+    public void setStatus_NotEqual_ToDo() {
+        setStatus_NotEqual_AsTodoStatus(CDef.TodoStatus.ToDo);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As Doing (DOING). And OnlyOnceRegistered. <br>
+     * Doing
+     */
+    public void setStatus_NotEqual_Doing() {
+        setStatus_NotEqual_AsTodoStatus(CDef.TodoStatus.Doing);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). As Done (DONE). And OnlyOnceRegistered. <br>
+     * Done
+     */
+    public void setStatus_NotEqual_Done() {
+        setStatus_NotEqual_AsTodoStatus(CDef.TodoStatus.Done);
+    }
+
+    protected void doSetStatus_NotEqual(String status) {
+        regStatus(CK_NES, status);
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus}
+     * @param statusList The collection of status as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    protected void setStatus_InScope(Collection<String> statusList) {
+        doSetStatus_InScope(statusList);
+    }
+
+    /**
+     * InScope {in ('a', 'b')}. As TodoStatus. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} <br>
+     * TODO status
+     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setStatus_InScope_AsTodoStatus(Collection<CDef.TodoStatus> cdefList) {
+        doSetStatus_InScope(cTStrL(cdefList));
+    }
+
+    protected void doSetStatus_InScope(Collection<String> statusList) {
+        regINS(CK_INS, cTL(statusList), xgetCValueStatus(), "status");
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus}
+     * @param statusList The collection of status as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    protected void setStatus_NotInScope(Collection<String> statusList) {
+        doSetStatus_NotInScope(statusList);
+    }
+
+    /**
+     * NotInScope {not in ('a', 'b')}. As TodoStatus. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
+     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus} <br>
+     * TODO status
+     * @param cdefList The list of classification definition (as ENUM type). (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setStatus_NotInScope_AsTodoStatus(Collection<CDef.TodoStatus> cdefList) {
+        doSetStatus_NotInScope(cTStrL(cdefList));
+    }
+
+    protected void doSetStatus_NotInScope(Collection<String> statusList) {
+        regINS(CK_NINS, cTL(statusList), xgetCValueStatus(), "status");
+    }
+
+    protected void regStatus(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueStatus(), "status"); }
+    protected abstract ConditionValue xgetCValueStatus();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>

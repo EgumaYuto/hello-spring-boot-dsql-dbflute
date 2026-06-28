@@ -1,0 +1,31 @@
+map:{
+    ; 2026/06/28 11:25:45.333 = map:{
+        ; diffDate = 2026/06/28 11:25:45.333
+        ; tableCount = map:{
+            ; next = 3
+            ; previous = 2
+        }
+        ; diffAuthor = yuto.eguma
+        ; diffGitBranch = main
+        ; tableDiff = map:{
+            ; cls_todo_status = map:{
+                ; tableName = cls_todo_status
+                ; diffType = ADD
+            }
+            ; todos = map:{
+                ; tableName = todos
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; status = map:{
+                        ; columnName = status
+                        ; diffType = ADD
+                    }
+                    ; done = map:{
+                        ; columnName = done
+                        ; diffType = DELETE
+                    }
+                }
+            }
+        }
+    }
+}

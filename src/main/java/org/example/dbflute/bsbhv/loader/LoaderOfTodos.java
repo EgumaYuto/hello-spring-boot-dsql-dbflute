@@ -31,6 +31,13 @@ public class LoaderOfTodos {
     // ===================================================================================
     //                                                                    Pull out Foreign
     //                                                                    ================
+    protected LoaderOfClsTodoStatus _foreignClsTodoStatusLoader;
+    public LoaderOfClsTodoStatus pulloutClsTodoStatus() {
+        if (_foreignClsTodoStatusLoader == null)
+        { _foreignClsTodoStatusLoader = new LoaderOfClsTodoStatus().ready(myBhv().pulloutClsTodoStatus(_selectedList), _selector); }
+        return _foreignClsTodoStatusLoader;
+    }
+
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========

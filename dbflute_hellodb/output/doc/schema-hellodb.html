@@ -601,6 +601,10 @@ pre.spolicyviodisp {
 <h1>Schema for hellodb (postgresql)</h1>
 <p class="mainschema">generated from <strong>hellodb.public</strong></p>
 <div class="navilinkarea">
+<p class="sublink">
+ <a href="#cdef">Classification Definition</a>
+| <a href="#schemapolicy">Schema Policy</a>
+</p>
 <p class="sisterlink"><a href="./history-hellodb.html">to HistoryHTML</a></p>
 </div>
 
@@ -656,7 +660,7 @@ pre.spolicyviodisp {
 
 
 
-<h2 title="mainSchema=hellodb.public, tableCount=2, columnCountAll=10">Table List</h2>
+<h2 title="mainSchema=hellodb.public, tableCount=3, columnCountAll=13">Table List</h2>
 <div class="keywordsearch">
 	<input type="text" id="incremental-search-field" tabindex=1 value="" placeholder="Table Search" />
 	<ul id="suggestion-list" class="suggestionarea"></ul>
@@ -678,16 +682,26 @@ pre.spolicyviodisp {
 	<tbody id="table-list-body">
 	<tr>
 		<td class="rownumcell">1</td>
-		<td class="namecell" data-name="todos"><a href="#todos" title="type=TABLE, primaryKey={id}, nameLength=5, columnCount=5">todos</a></td>
+		<td class="namecell" data-name="cls_todo_status"><a href="#cls_todo_status" title="type=TABLE, primaryKey={code}, nameLength=15, columnCount=3">cls_todo_status</a></td>
 		<td class="typecell">TABLE</td>
 		<td class="relcell">&nbsp;</td>
+		<td class="relcell"><a href="#todos" class="additionalfk" title="FK_TODOS_STATUS">todos</a></td>
+		<td class="commentcell cls_todo_status_comment"><pre>&nbsp;</pre></td>
+		<td class="subcell">ClsTodoStatus</td>
+		<td class="subcell">2026/06/28</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="namecell" data-name="todos"><a href="#todos" title="type=TABLE, primaryKey={id}, nameLength=5, columnCount=5">todos</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell"><a href="#cls_todo_status" class="additionalfk" title="FK_TODOS_STATUS">cls_todo_status</a></td>
 		<td class="relcell">&nbsp;</td>
 		<td class="commentcell todos_comment"><pre>&nbsp;</pre></td>
 		<td class="subcell">Todos</td>
 		<td class="subcell">2026/06/27</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">2</td>
+		<td class="rownumcell">3</td>
 		<td class="namecell" data-name="users"><a href="#users" title="type=TABLE, primaryKey={id}, nameLength=5, columnCount=5">users</a></td>
 		<td class="typecell">TABLE</td>
 		<td class="relcell">&nbsp;</td>
@@ -695,6 +709,91 @@ pre.spolicyviodisp {
 		<td class="commentcell users_comment"><pre>&nbsp;</pre></td>
 		<td class="subcell">Users</td>
 		<td class="subcell">2026/06/07</td>
+	</tr>
+	</tbody>
+</table>
+
+<h2 id="cls_todo_status" title="type=TABLE, primaryKey={code}, nameLength=15, columnCount=3">
+cls_todo_status
+&nbsp;<span class="tablefirstdatetitle">since 2026/06/28</span>
+</h2>
+<div class="tablecomment cls_todo_status_comment" data-name="cls_todo_status"><pre></pre></div>
+<input type="hidden" value="cls_todo_status">
+<table class="tablecontent">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>ColumnComment</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+		<th>Since</th>
+	</tr>
+	</thead>
+	<tbody id="cls_todo_status-body">
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="cls_todo_status_pkey">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="cls_todo_status_code">code</td>
+		<td class="typecell">varchar</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#todos" class="additionalfk" title="FK_TODOS_STATUS">todos</a>&nbsp;</td>
+		<td class="relcell"><a href="#TodoStatusCls">TodoStatus</a></td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">code</td>
+		<td class="subcell">String</td>
+		<td class="subcell">first</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="cls_todo_status_name">name</td>
+		<td class="typecell">varchar</td>
+		<td class="sizecell"> 50 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">name</td>
+		<td class="subcell">String</td>
+		<td class="subcell">first</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="cls_todo_status_disp_order">disp_order</td>
+		<td class="typecell">int4</td>
+		<td class="sizecell"> 10 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">dispOrder</td>
+		<td class="subcell">Integer</td>
+		<td class="subcell">first</td>
 	</tr>
 	</tbody>
 </table>
@@ -792,17 +891,17 @@ todos
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell">*</td>
-		<td class=" columnnamecell" id="todos_done">done</td>
-		<td class="typecell">bool</td>
-		<td class="sizecell"> 1 </td>
-		<td class="defvalcell"> false</td>
-		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class=" columnnamecell" id="todos_status">status</td>
+		<td class="typecell">varchar</td>
+		<td class="sizecell"> 20 </td>
+		<td class="defvalcell"> 'TODO'::character varying</td>
+		<td class="relcell"><a href="#cls_todo_status" class="additionalfk" title="FK_TODOS_STATUS">cls_todo_status</a>&nbsp;</td>
 		<td class="relcell">&nbsp;</td>
-		<td class="relcell"> &nbsp;</td>
+		<td class="relcell"><a href="#TodoStatusCls">TodoStatus</a></td>
 		<td class="commentcell"><pre>&nbsp;</pre></td>
-		<td class="subcell">done</td>
-		<td class="subcell">Boolean</td>
-		<td class="subcell">first</td>
+		<td class="subcell">status</td>
+		<td class="subcell">String</td>
+		<td class="subcell">2026/06/28</td>
 	</tr>
 	<tr>
 		<td class="rownumcell">5</td>
@@ -954,7 +1053,76 @@ users
 </table>
 
 
+<h2 id="cdef">Classification Definition</h2>
+<table>
+	<thead>
+	<tr>
+		<th>Classification</th>
+		<th>Type</th>
+		<th>Top Comment</th>
+		<th>Definition</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>TodoStatus</td>
+		<td class="clstypecell">table</td>
+		<td>TODO&nbsp;status</td>
+		<td>
+			<table class="child">
+			<tr>
+				<th id="TodoStatusCls">Code</th>
+				<th>Name</th>
+				<th>Alias</th>
+				<th>Comment</th>
+			</tr>
+			<tr>
+				<td>TODO</td>
+				<td>ToDo</td>
+				<td>To Do</td>
+				<td class="commentcell">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>DOING</td>
+				<td>Doing</td>
+				<td>Doing</td>
+				<td class="commentcell">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>DONE</td>
+				<td>Done</td>
+				<td>Done</td>
+				<td class="commentcell">&nbsp;</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</tbody>
+</table>
 
+
+<h2 id="schemapolicy">Schema Policy</h2>
+<pre class="spolicydisp">
+
+[Schema Policy]
+ tableExceptList: [prefix:cls_]
+ tableTargetList: []
+ columnExceptMap: {todos=[status]}
+ isMainSchemaOnly: false
+ wholeMap:
+   themeList: []
+   statementList:
+ tableMap:
+   themeList: [hasPK, lowerCaseBasis]
+   statementList:
+ columnMap:
+   themeList: [lowerCaseBasis]
+   statementList:
+    {if:{column is fk}} {then bad =&gt; Aurora DSQL does not support foreign keys, so remove the FK and enforce the relation in app code}
+    {if:{columnName is suffix:_at}} {then:{dbType is prefix:timestamp}}
+    {if:{column is pk}} {then:{columnName is id}}
+    {if:{column is pk}} {then:{dbType is uuid}}
+</pre>
 
 <h2 id="thanks">Thanks</h2>
 <p>
@@ -1627,6 +1795,49 @@ function StoreClient() {
 	// setup from dbflute if decomment pickup exists
 	this.embeddedPickup = {
 		'tables': [
+			{
+				'tableName': 'users'
+				, 'mappings' : [
+				]
+				, 'properties': [
+						{
+						'decomment': 'shalias:{}'
+						, 'databaseComment': ''
+						, 'commentVersion': 0
+						, 'authors': ['yuto.eguma']
+						, 'pieceCode': '8eaef409'
+						, 'pieceDatatime': '2026-06-28T00:14:17.295'
+						, 'previousPieces': ['5d7345c5']
+					}
+				]
+				, 'columns': [
+				]
+			}
+			, {
+				'tableName': 'todos'
+				, 'mappings' : [
+				]
+				, 'properties': [
+				]
+				, 'columns': [
+					 {
+						'columnName': 'id'
+						, 'mappings' : [
+						]
+						, 'properties': [
+								 {
+								'decomment': 'shalias:{}<br>絡むコメント'
+								, 'databaseComment': ''
+								, 'commentVersion': 0
+								, 'authors': ['yuto.eguma']
+								, 'pieceCode': '59908529'
+								, 'pieceDatatime': '2026-06-28T00:15:00.872'
+								, 'previousPieces': []
+							}
+						]
+					}
+				]
+			}
 		]
 	}
 
@@ -1637,7 +1848,21 @@ function StoreClient() {
 	// to determine database comment conflict.
 	// _/_/_/_/_/_/_/_/
 	this.pickupStore = {
-		'todos': {
+		'cls_todo_status': {
+			'databaseComment': ''
+			, 'columns': {
+				'code': {
+					'databaseComment': ''
+				}
+				, 'name': {
+					'databaseComment': ''
+				}
+				, 'disp_order': {
+					'databaseComment': ''
+				}
+			}
+		}
+		, 'todos': {
 			'databaseComment': ''
 			, 'columns': {
 				'id': {
@@ -1649,7 +1874,7 @@ function StoreClient() {
 				, 'title': {
 					'databaseComment': ''
 				}
-				, 'done': {
+				, 'status': {
 					'databaseComment': ''
 				}
 				, 'created_at': {

@@ -1,20 +1,25 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { api, type Todo } from '../api/client'
+import { api, type Todo, type TodoStatus } from '../api/client'
 import { useAuth } from '../auth/AuthContext'
+
+const DONE = 'DONE'
 
 export function HomePage() {
   const { user, logout } = useAuth()
   const [todos, setTodos] = useState<Todo[]>([])
+  const [statuses, setStatuses] = useState<TodoStatus[]>([])
   const [title, setTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [adding, setAdding] = useState(false)
 
   useEffect(() => {
-    api.todos
-      .list()
-      .then(setTodos)
-      .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load todos'))
+    Promise.all([api.todos.list(), api.todoStatuses()])
+      .then(([todoList, statusList]) => {
+        setTodos(todoList)
+        setStatuses(statusList)
+      })
+      .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load'))
       .finally(() => setLoading(false))
   }, [])
 
@@ -35,12 +40,12 @@ export function HomePage() {
     }
   }
 
-  const toggle = async (todo: Todo) => {
+  const changeStatus = async (todo: Todo, status: string) => {
     try {
-      const updated = await api.todos.setDone(todo.id, !todo.done)
+      const updated = await api.todos.setStatus(todo.id, status)
       setTodos((prev) => prev.map((t) => (t.id === updated.id ? updated : t)))
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to update todo')
+      setError(err instanceof Error ? err.message : 'Failed to update status')
     }
   }
 
@@ -53,7 +58,7 @@ export function HomePage() {
     }
   }
 
-  const remaining = todos.filter((t) => !t.done).length
+  const remaining = todos.filter((t) => t.status !== DONE).length
 
   return (
     <>
@@ -89,18 +94,24 @@ export function HomePage() {
           <>
             <ul className="todo-list">
               {todos.map((t) => (
-                <li key={t.id} className={t.done ? 'done' : ''}>
-                  <label>
-                    <input type="checkbox" checked={t.done} onChange={() => toggle(t)} />
-                    <span>{t.title}</span>
-                  </label>
-                  <button className="link-danger" onClick={() => remove(t)} aria-label="削除">
-                    削除
-                  </button>
+                <li key={t.id} className={t.status === DONE ? 'done' : ''}>
+                  <span className="todo-title">{t.title}</span>
+                  <span className="todo-actions">
+                    <select value={t.status} onChange={(e) => changeStatus(t, e.target.value)}>
+                      {statuses.map((s) => (
+                        <option key={s.code} value={s.code}>
+                          {s.name}
+                        </option>
+                      ))}
+                    </select>
+                    <button className="link-danger" onClick={() => remove(t)} aria-label="削除">
+                      削除
+                    </button>
+                  </span>
                 </li>
               ))}
             </ul>
-            <p className="muted">残り {remaining} 件</p>
+            <p className="muted">未完了 {remaining} 件</p>
           </>
         )}
       </div>

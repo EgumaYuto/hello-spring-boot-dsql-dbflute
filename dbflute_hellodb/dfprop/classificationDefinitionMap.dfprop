@@ -1,0 +1,10 @@
+# Classification (区分値) definitions.
+# TodoStatus is a TABLE classification sourced from the cls_todo_status master table
+# (code/name/disp_order). With the additional (pseudo) FK todos.status -> cls_todo_status.code
+# (see additionalForeignKeyMap.dfprop), DBFlute deploys this classification onto todos.status.
+map:{
+    ; TodoStatus = list:{
+        ; map:{ topComment=TODO status ; codeType=String }
+        ; map:{ table=cls_todo_status ; code=code ; name=name ; orderBy=disp_order }
+    }
+}

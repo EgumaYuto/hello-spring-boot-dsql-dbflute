@@ -4,8 +4,7 @@
 -- local Postgres, see dfprop/databaseInfoMap.dfprop) before running this SQL, so a
 -- re-run cleanly re-initializes the DB. LOCAL ONLY — never run against Aurora DSQL.
 --
--- This is the current full schema (the net result of the Flyway migrations
--- V1..V3, which are kept for reference). Keep both in sync when adding tables.
+-- Keep this in sync with the DSQL provisioning in src/.../tools/DbInit.kt.
 
 -- Column order mirrors the Flyway build (V1 created id/name/email/created_at, then
 -- V2 appended password_hash last) so the generated DBFlute code stays identical.
@@ -17,10 +16,23 @@ CREATE TABLE users (
     password_hash VARCHAR(255)
 );
 
+-- Classification master for todos.status (DBFlute table classification "TodoStatus").
+-- `cls_` prefix marks classification masters (exempted from the UUID-PK policy via
+-- schemaPolicyMap tableExceptList prefix:cls_). code is the PK by classification convention.
+CREATE TABLE cls_todo_status (
+    code       VARCHAR(20) PRIMARY KEY,
+    name       VARCHAR(50) NOT NULL,
+    disp_order INTEGER NOT NULL
+);
+INSERT INTO cls_todo_status (code, name, disp_order) VALUES
+    ('TODO', 'To Do', 1),
+    ('DOING', 'Doing', 2),
+    ('DONE', 'Done', 3);
+
 CREATE TABLE todos (
     id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id    UUID NOT NULL,
     title      VARCHAR(500) NOT NULL,
-    done       BOOLEAN NOT NULL DEFAULT false,
+    status     VARCHAR(20) NOT NULL DEFAULT 'TODO',
     created_at TIMESTAMPTZ DEFAULT now()
 );

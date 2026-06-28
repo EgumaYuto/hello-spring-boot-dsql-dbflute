@@ -12,21 +12,21 @@ import org.example.dbflute.cbean.cq.bs.*;
 import org.example.dbflute.cbean.cq.*;
 
 /**
- * The condition-query for in-line of todos.
+ * The condition-query for in-line of cls_todo_status.
  * @author DBFlute(AutoGenerator)
  */
-public class TodosCIQ extends AbstractBsTodosCQ {
+public class ClsTodoStatusCIQ extends AbstractBsClsTodoStatusCQ {
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected BsTodosCQ _myCQ;
+    protected BsClsTodoStatusCQ _myCQ;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public TodosCIQ(ConditionQuery referrerQuery, SqlClause sqlClause
-                        , String aliasName, int nestLevel, BsTodosCQ myCQ) {
+    public ClsTodoStatusCIQ(ConditionQuery referrerQuery, SqlClause sqlClause
+                        , String aliasName, int nestLevel, BsClsTodoStatusCQ myCQ) {
         super(referrerQuery, sqlClause, aliasName, nestLevel);
         _myCQ = myCQ;
         _foreignPropertyName = _myCQ.xgetForeignPropertyName(); // accept foreign property name
@@ -61,21 +61,29 @@ public class TodosCIQ extends AbstractBsTodosCQ {
     // ===================================================================================
     //                                                                Override about Query
     //                                                                ====================
-    protected ConditionValue xgetCValueId() { return _myCQ.xdfgetId(); }
-    protected ConditionValue xgetCValueUserId() { return _myCQ.xdfgetUserId(); }
-    protected ConditionValue xgetCValueTitle() { return _myCQ.xdfgetTitle(); }
-    protected ConditionValue xgetCValueStatus() { return _myCQ.xdfgetStatus(); }
-    protected ConditionValue xgetCValueCreatedAt() { return _myCQ.xdfgetCreatedAt(); }
+    protected ConditionValue xgetCValueCode() { return _myCQ.xdfgetCode(); }
+    public String keepCode_ExistsReferrer_TodosList(TodosCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepCode_NotExistsReferrer_TodosList(TodosCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepCode_SpecifyDerivedReferrer_TodosList(TodosCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepCode_QueryDerivedReferrer_TodosList(TodosCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepCode_QueryDerivedReferrer_TodosListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    protected ConditionValue xgetCValueName() { return _myCQ.xdfgetName(); }
+    protected ConditionValue xgetCValueDispOrder() { return _myCQ.xdfgetDispOrder(); }
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String pp) { return null; }
-    public String keepScalarCondition(TodosCQ sq)
+    public String keepScalarCondition(ClsTodoStatusCQ sq)
     { throwIICBOE("ScalarCondition"); return null; }
-    public String keepSpecifyMyselfDerived(TodosCQ sq)
+    public String keepSpecifyMyselfDerived(ClsTodoStatusCQ sq)
     { throwIICBOE("(Specify)MyselfDerived"); return null;}
-    public String keepQueryMyselfDerived(TodosCQ sq)
+    public String keepQueryMyselfDerived(ClsTodoStatusCQ sq)
     { throwIICBOE("(Query)MyselfDerived"); return null;}
     public String keepQueryMyselfDerivedParameter(Object vl)
     { throwIICBOE("(Query)MyselfDerived"); return null;}
-    public String keepMyselfExists(TodosCQ sq)
+    public String keepMyselfExists(ClsTodoStatusCQ sq)
     { throwIICBOE("MyselfExists"); return null;}
 
     protected void throwIICBOE(String name)
@@ -85,6 +93,6 @@ public class TodosCIQ extends AbstractBsTodosCQ {
     //                                                                       Very Internal
     //                                                                       =============
     // very internal (for suppressing warn about 'Not Use Import')
-    protected String xinCB() { return TodosCB.class.getName(); }
-    protected String xinCQ() { return TodosCQ.class.getName(); }
+    protected String xinCB() { return ClsTodoStatusCB.class.getName(); }
+    protected String xinCQ() { return ClsTodoStatusCQ.class.getName(); }
 }

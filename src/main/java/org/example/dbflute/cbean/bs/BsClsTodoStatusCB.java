@@ -12,6 +12,7 @@ import org.dbflute.cbean.scoping.*;
 import org.dbflute.dbmeta.DBMetaProvider;
 import org.dbflute.twowaysql.factory.SqlAnalyzerFactory;
 import org.dbflute.twowaysql.style.BoundDateDisplayTimeZoneProvider;
+import org.example.dbflute.allcommon.CDef;
 import org.example.dbflute.allcommon.DBFluteConfig;
 import org.example.dbflute.allcommon.DBMetaInstanceHandler;
 import org.example.dbflute.allcommon.ImplementedInvokerAssistant;
@@ -20,20 +21,20 @@ import org.example.dbflute.cbean.*;
 import org.example.dbflute.cbean.cq.*;
 
 /**
- * The base condition-bean of todos.
+ * The base condition-bean of cls_todo_status.
  * @author DBFlute(AutoGenerator)
  */
-public class BsTodosCB extends AbstractConditionBean {
+public class BsClsTodoStatusCB extends AbstractConditionBean {
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected TodosCQ _conditionQuery;
+    protected ClsTodoStatusCQ _conditionQuery;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public BsTodosCB() {
+    public BsClsTodoStatusCB() {
         if (DBFluteConfig.getInstance().isPagingCountLater()) {
             enablePagingCountLater();
         }
@@ -76,7 +77,7 @@ public class BsTodosCB extends AbstractConditionBean {
     }
 
     public String asTableDbName() {
-        return "todos";
+        return "cls_todo_status";
     }
 
     // ===================================================================================
@@ -84,23 +85,23 @@ public class BsTodosCB extends AbstractConditionBean {
     //                                                                 ===================
     /**
      * Accept the query condition of primary key as equal.
-     * @param id : PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]. (NotNull)
+     * @param code : PK, NotNull, varchar(20), classification=TodoStatus. (NotNull)
      * @return this. (NotNull)
      */
-    public TodosCB acceptPK(java.util.UUID id) {
-        assertObjectNotNull("id", id);
-        BsTodosCB cb = this;
-        cb.query().setId_Equal(id);
-        return (TodosCB)this;
+    public ClsTodoStatusCB acceptPK(CDef.TodoStatus code) {
+        assertObjectNotNull("code", code);
+        BsClsTodoStatusCB cb = this;
+        cb.query().setCode_Equal_AsTodoStatus(code);
+        return (ClsTodoStatusCB)this;
     }
 
     public ConditionBean addOrderBy_PK_Asc() {
-        query().addOrderBy_Id_Asc();
+        query().addOrderBy_Code_Asc();
         return this;
     }
 
     public ConditionBean addOrderBy_PK_Desc() {
-        query().addOrderBy_Id_Desc();
+        query().addOrderBy_Code_Desc();
         return this;
     }
 
@@ -164,34 +165,34 @@ public class BsTodosCB extends AbstractConditionBean {
      * </pre>
      * @return The instance of condition-query for base-point table to set up query. (NotNull)
      */
-    public TodosCQ query() {
+    public ClsTodoStatusCQ query() {
         assertQueryPurpose(); // assert only when user-public query
         return doGetConditionQuery();
     }
 
-    public TodosCQ xdfgetConditionQuery() { // public for parameter comment and internal
+    public ClsTodoStatusCQ xdfgetConditionQuery() { // public for parameter comment and internal
         return doGetConditionQuery();
     }
 
-    protected TodosCQ doGetConditionQuery() {
+    protected ClsTodoStatusCQ doGetConditionQuery() {
         if (_conditionQuery == null) {
             _conditionQuery = createLocalCQ();
         }
         return _conditionQuery;
     }
 
-    protected TodosCQ createLocalCQ() {
+    protected ClsTodoStatusCQ createLocalCQ() {
         return xcreateCQ(null, getSqlClause(), getSqlClause().getBasePointAliasName(), 0);
     }
 
-    protected TodosCQ xcreateCQ(ConditionQuery childQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
-        TodosCQ cq = xnewCQ(childQuery, sqlClause, aliasName, nestLevel);
+    protected ClsTodoStatusCQ xcreateCQ(ConditionQuery childQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
+        ClsTodoStatusCQ cq = xnewCQ(childQuery, sqlClause, aliasName, nestLevel);
         cq.xsetBaseCB(this);
         return cq;
     }
 
-    protected TodosCQ xnewCQ(ConditionQuery childQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
-        return new TodosCQ(childQuery, sqlClause, aliasName, nestLevel);
+    protected ClsTodoStatusCQ xnewCQ(ConditionQuery childQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
+        return new ClsTodoStatusCQ(childQuery, sqlClause, aliasName, nestLevel);
     }
 
     /**
@@ -215,10 +216,10 @@ public class BsTodosCB extends AbstractConditionBean {
      * </pre>
      * @param unionCBLambda The callback for query of 'union'. (NotNull)
      */
-    public void union(UnionQuery<TodosCB> unionCBLambda) {
-        final TodosCB cb = new TodosCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
+    public void union(UnionQuery<ClsTodoStatusCB> unionCBLambda) {
+        final ClsTodoStatusCB cb = new ClsTodoStatusCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
-        final TodosCQ cq = cb.query(); query().xsetUnionQuery(cq);
+        final ClsTodoStatusCQ cq = cb.query(); query().xsetUnionQuery(cq);
     }
 
     /**
@@ -232,35 +233,15 @@ public class BsTodosCB extends AbstractConditionBean {
      * </pre>
      * @param unionCBLambda The callback for query of 'union all'. (NotNull)
      */
-    public void unionAll(UnionQuery<TodosCB> unionCBLambda) {
-        final TodosCB cb = new TodosCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
+    public void unionAll(UnionQuery<ClsTodoStatusCB> unionCBLambda) {
+        final ClsTodoStatusCB cb = new ClsTodoStatusCB(); cb.xsetupForUnion(this); xsyncUQ(cb);
         try { lock(); unionCBLambda.query(cb); } finally { unlock(); } xsaveUCB(cb);
-        final TodosCQ cq = cb.query(); query().xsetUnionAllQuery(cq);
+        final ClsTodoStatusCQ cq = cb.query(); query().xsetUnionAllQuery(cq);
     }
 
     // ===================================================================================
     //                                                                         SetupSelect
     //                                                                         ===========
-    /**
-     * Set up relation columns to select clause. <br>
-     * cls_todo_status by my status, named 'clsTodoStatus'.
-     * <pre>
-     * <span style="color: #0000C0">todosBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_ClsTodoStatus()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
-     *     <span style="color: #553000">cb</span>.query().set...
-     * }).alwaysPresent(<span style="color: #553000">todos</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
-     *     ... = <span style="color: #553000">todos</span>.<span style="color: #CC4747">getClsTodoStatus()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
-     * });
-     * </pre>
-     */
-    public void setupSelect_ClsTodoStatus() {
-        assertSetupSelectPurpose("clsTodoStatus");
-        if (hasSpecifiedLocalColumn()) {
-            specify().columnStatus();
-        }
-        doSetupSelect(() -> query().queryClsTodoStatus());
-    }
-
     // [DBFlute-0.7.4]
     // ===================================================================================
     //                                                                             Specify
@@ -301,76 +282,58 @@ public class BsTodosCB extends AbstractConditionBean {
         return _specification != null && _specification.hasSpecifiedColumn();
     }
 
-    public static class HpSpecification extends HpAbstractSpecification<TodosCQ> {
-        protected ClsTodoStatusCB.HpSpecification _clsTodoStatus;
-        public HpSpecification(ConditionBean baseCB, HpSpQyCall<TodosCQ> qyCall
+    public static class HpSpecification extends HpAbstractSpecification<ClsTodoStatusCQ> {
+        public HpSpecification(ConditionBean baseCB, HpSpQyCall<ClsTodoStatusCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
                              , HpSDRFunctionFactory sdrFuncFactory)
         { super(baseCB, qyCall, purpose, dbmetaProvider, sdrFuncFactory); }
         /**
-         * id: {PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]}
+         * code: {PK, NotNull, varchar(20), classification=TodoStatus}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnId() { return doColumn("id"); }
+        public SpecifiedColumn columnCode() { return doColumn("code"); }
         /**
-         * user_id: {NotNull, uuid(2147483647)}
+         * name: {NotNull, varchar(50)}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnUserId() { return doColumn("user_id"); }
+        public SpecifiedColumn columnName() { return doColumn("name"); }
         /**
-         * title: {NotNull, varchar(500)}
+         * disp_order: {NotNull, int4(10)}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnTitle() { return doColumn("title"); }
-        /**
-         * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnStatus() { return doColumn("status"); }
-        /**
-         * created_at: {timestamptz(35, 6), default=[now()]}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnCreatedAt() { return doColumn("created_at"); }
+        public SpecifiedColumn columnDispOrder() { return doColumn("disp_order"); }
         public void everyColumn() { doEveryColumn(); }
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override
         protected void doSpecifyRequiredColumn() {
-            columnId(); // PK
-            if (qyCall().qy().hasConditionQueryClsTodoStatus()
-                    || qyCall().qy().xgetReferrerQuery() instanceof ClsTodoStatusCQ) {
-                columnStatus(); // FK or one-to-one referrer
-            }
+            columnCode(); // PK
         }
         @Override
-        protected String getTableDbName() { return "todos"; }
+        protected String getTableDbName() { return "cls_todo_status"; }
         /**
-         * Prepare to specify functions about relation table. <br>
-         * cls_todo_status by my status, named 'clsTodoStatus'.
-         * @return The instance for specification for relation table to specify. (NotNull)
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from todos where ...) as FOO_MAX} <br>
+         * todos by status, named 'todosList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(todosCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     todosCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     todosCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, Todos.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
          */
-        public ClsTodoStatusCB.HpSpecification specifyClsTodoStatus() {
-            assertRelation("clsTodoStatus");
-            if (_clsTodoStatus == null) {
-                _clsTodoStatus = new ClsTodoStatusCB.HpSpecification(_baseCB
-                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryClsTodoStatus()
-                                    , () -> _qyCall.qy().queryClsTodoStatus())
-                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
-                if (xhasSyncQyCall()) { // inherits it
-                    _clsTodoStatus.xsetSyncQyCall(xcreateSpQyCall(
-                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryClsTodoStatus()
-                      , () -> xsyncQyCall().qy().queryClsTodoStatus()));
-                }
-            }
-            return _clsTodoStatus;
+        public HpSDRFunction<TodosCB, ClsTodoStatusCQ> derivedTodos() {
+            assertDerived("todosList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<TodosCB> sq, ClsTodoStatusCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveTodosList(fn, sq, al, op), _dbmetaProvider);
         }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).
          * @return The object to set up a function for myself table. (NotNull)
          */
-        public HpSDRFunction<TodosCB, TodosCQ> myselfDerived() {
+        public HpSDRFunction<ClsTodoStatusCB, ClsTodoStatusCQ> myselfDerived() {
             assertDerived("myselfDerived"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
-            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<TodosCB> sq, TodosCQ cq, String al, DerivedReferrerOption op)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<ClsTodoStatusCB> sq, ClsTodoStatusCQ cq, String al, DerivedReferrerOption op)
                     -> cq.xsmyselfDerive(fn, sq, al, op), _dbmetaProvider);
         }
     }
@@ -383,9 +346,9 @@ public class BsTodosCB extends AbstractConditionBean {
      * This is very specialty so you can get the frontier spirit. Bon voyage!
      * @return The condition-bean for dream cruise, which is linked to main condition-bean.
      */
-    public TodosCB dreamCruiseCB() {
-        TodosCB cb = new TodosCB();
-        cb.xsetupForDreamCruise((TodosCB) this);
+    public ClsTodoStatusCB dreamCruiseCB() {
+        ClsTodoStatusCB cb = new ClsTodoStatusCB();
+        cb.xsetupForDreamCruise((ClsTodoStatusCB) this);
         return cb;
     }
 
@@ -410,15 +373,15 @@ public class BsTodosCB extends AbstractConditionBean {
      * @param colCBLambda The callback for specify-query of left column. (NotNull)
      * @return The object for setting up operand and right column. (NotNull)
      */
-    public HpColQyOperand<TodosCB> columnQuery(final SpecifyQuery<TodosCB> colCBLambda) {
+    public HpColQyOperand<ClsTodoStatusCB> columnQuery(final SpecifyQuery<ClsTodoStatusCB> colCBLambda) {
         return xcreateColQyOperand((rightSp, operand) -> {
             return xcolqy(xcreateColumnQueryCB(), xcreateColumnQueryCB(), colCBLambda, rightSp, operand);
         });
     }
 
-    protected TodosCB xcreateColumnQueryCB() {
-        TodosCB cb = new TodosCB();
-        cb.xsetupForColumnQuery((TodosCB)this);
+    protected ClsTodoStatusCB xcreateColumnQueryCB() {
+        ClsTodoStatusCB cb = new ClsTodoStatusCB();
+        cb.xsetupForColumnQuery((ClsTodoStatusCB)this);
         return cb;
     }
 
@@ -438,8 +401,8 @@ public class BsTodosCB extends AbstractConditionBean {
      * </pre>
      * @param orCBLambda The callback for query of or-condition. (NotNull)
      */
-    public void orScopeQuery(OrQuery<TodosCB> orCBLambda) {
-        xorSQ((TodosCB)this, orCBLambda);
+    public void orScopeQuery(OrQuery<ClsTodoStatusCB> orCBLambda) {
+        xorSQ((ClsTodoStatusCB)this, orCBLambda);
     }
 
     /**
@@ -457,8 +420,8 @@ public class BsTodosCB extends AbstractConditionBean {
      * </pre>
      * @param andCBLambda The callback for query of and-condition. (NotNull)
      */
-    public void orScopeQueryAndPart(AndQuery<TodosCB> andCBLambda) {
-        xorSQAP((TodosCB)this, andCBLambda);
+    public void orScopeQueryAndPart(AndQuery<ClsTodoStatusCB> andCBLambda) {
+        xorSQAP((ClsTodoStatusCB)this, andCBLambda);
     }
 
     // ===================================================================================
@@ -488,11 +451,11 @@ public class BsTodosCB extends AbstractConditionBean {
     //                                                                        ============
     @Override
     protected void xprepareSyncQyCall(ConditionBean mainCB) {
-        final TodosCB cb;
+        final ClsTodoStatusCB cb;
         if (mainCB != null) {
-            cb = (TodosCB)mainCB;
+            cb = (ClsTodoStatusCB)mainCB;
         } else {
-            cb = new TodosCB();
+            cb = new ClsTodoStatusCB();
         }
         specify().xsetSyncQyCall(xcreateSpQyCall(() -> true, () -> cb.query()));
     }
@@ -501,8 +464,8 @@ public class BsTodosCB extends AbstractConditionBean {
     //                                                                            Internal
     //                                                                            ========
     // very internal (for suppressing warn about 'Not Use Import')
-    protected String xgetConditionBeanClassNameInternally() { return TodosCB.class.getName(); }
-    protected String xgetConditionQueryClassNameInternally() { return TodosCQ.class.getName(); }
+    protected String xgetConditionBeanClassNameInternally() { return ClsTodoStatusCB.class.getName(); }
+    protected String xgetConditionQueryClassNameInternally() { return ClsTodoStatusCQ.class.getName(); }
     protected String xgetSubQueryClassNameInternally() { return SubQuery.class.getName(); }
     protected String xgetConditionOptionClassNameInternally() { return ConditionOption.class.getName(); }
 }

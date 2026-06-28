@@ -15,7 +15,12 @@ export interface AuthResponse {
 export interface Todo {
   id: string
   title: string
-  done: boolean
+  status: string
+}
+
+export interface TodoStatus {
+  code: string
+  name: string
 }
 
 const TOKEN_KEY = 'auth.token'
@@ -90,10 +95,12 @@ export const api = {
     list: () => request<Todo[]>('/todos'),
     create: (title: string) =>
       request<Todo>('/todos', { method: 'POST', body: JSON.stringify({ title }) }),
-    setDone: (id: string, done: boolean) =>
-      request<Todo>(`/todos/${id}`, { method: 'PATCH', body: JSON.stringify({ done }) }),
+    setStatus: (id: string, status: string) =>
+      request<Todo>(`/todos/${id}`, { method: 'PATCH', body: JSON.stringify({ status }) }),
     remove: (id: string) => request<void>(`/todos/${id}`, { method: 'DELETE' }),
   },
+
+  todoStatuses: () => request<TodoStatus[]>('/todo-statuses'),
 }
 
 export { ApiError }

@@ -13,20 +13,20 @@ import org.example.dbflute.cbean.*;
 import org.example.dbflute.cbean.cq.*;
 
 /**
- * The base condition-query of todos.
+ * The base condition-query of cls_todo_status.
  * @author DBFlute(AutoGenerator)
  */
-public class BsTodosCQ extends AbstractBsTodosCQ {
+public class BsClsTodoStatusCQ extends AbstractBsClsTodoStatusCQ {
 
     // ===================================================================================
     //                                                                           Attribute
     //                                                                           =========
-    protected TodosCIQ _inlineQuery;
+    protected ClsTodoStatusCIQ _inlineQuery;
 
     // ===================================================================================
     //                                                                         Constructor
     //                                                                         ===========
-    public BsTodosCQ(ConditionQuery referrerQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
+    public BsClsTodoStatusCQ(ConditionQuery referrerQuery, SqlClause sqlClause, String aliasName, int nestLevel) {
         super(referrerQuery, sqlClause, aliasName, nestLevel);
     }
 
@@ -35,143 +35,117 @@ public class BsTodosCQ extends AbstractBsTodosCQ {
     //                                                                 ===================
     /**
      * Prepare InlineView query. <br>
-     * {select ... from ... left outer join (select * from todos) where FOO = [value] ...}
+     * {select ... from ... left outer join (select * from cls_todo_status) where FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">inline()</span>.setFoo...;
      * </pre>
      * @return The condition-query for InlineView query. (NotNull)
      */
-    public TodosCIQ inline() {
+    public ClsTodoStatusCIQ inline() {
         if (_inlineQuery == null) { _inlineQuery = xcreateCIQ(); }
         _inlineQuery.xsetOnClause(false); return _inlineQuery;
     }
 
-    protected TodosCIQ xcreateCIQ() {
-        TodosCIQ ciq = xnewCIQ();
+    protected ClsTodoStatusCIQ xcreateCIQ() {
+        ClsTodoStatusCIQ ciq = xnewCIQ();
         ciq.xsetBaseCB(_baseCB);
         return ciq;
     }
 
-    protected TodosCIQ xnewCIQ() {
-        return new TodosCIQ(xgetReferrerQuery(), xgetSqlClause(), xgetAliasName(), xgetNestLevel(), this);
+    protected ClsTodoStatusCIQ xnewCIQ() {
+        return new ClsTodoStatusCIQ(xgetReferrerQuery(), xgetSqlClause(), xgetAliasName(), xgetNestLevel(), this);
     }
 
     /**
      * Prepare OnClause query. <br>
-     * {select ... from ... left outer join todos on ... and FOO = [value] ...}
+     * {select ... from ... left outer join cls_todo_status on ... and FOO = [value] ...}
      * <pre>
      * cb.query().queryMemberStatus().<span style="color: #CC4747">on()</span>.setFoo...;
      * </pre>
      * @return The condition-query for OnClause query. (NotNull)
      * @throws IllegalConditionBeanOperationException When this condition-query is base query.
      */
-    public TodosCIQ on() {
+    public ClsTodoStatusCIQ on() {
         if (isBaseQuery()) { throw new IllegalConditionBeanOperationException("OnClause for local table is unavailable!"); }
-        TodosCIQ inlineQuery = inline(); inlineQuery.xsetOnClause(true); return inlineQuery;
+        ClsTodoStatusCIQ inlineQuery = inline(); inlineQuery.xsetOnClause(true); return inlineQuery;
     }
 
     // ===================================================================================
     //                                                                               Query
     //                                                                               =====
-    protected ConditionValue _id;
-    public ConditionValue xdfgetId()
-    { if (_id == null) { _id = nCV(); }
-      return _id; }
-    protected ConditionValue xgetCValueId() { return xdfgetId(); }
+    protected ConditionValue _code;
+    public ConditionValue xdfgetCode()
+    { if (_code == null) { _code = nCV(); }
+      return _code; }
+    protected ConditionValue xgetCValueCode() { return xdfgetCode(); }
+
+    public Map<String, TodosCQ> xdfgetCode_ExistsReferrer_TodosList() { return xgetSQueMap("code_ExistsReferrer_TodosList"); }
+    public String keepCode_ExistsReferrer_TodosList(TodosCQ sq) { return xkeepSQue("code_ExistsReferrer_TodosList", sq); }
+
+    public Map<String, TodosCQ> xdfgetCode_NotExistsReferrer_TodosList() { return xgetSQueMap("code_NotExistsReferrer_TodosList"); }
+    public String keepCode_NotExistsReferrer_TodosList(TodosCQ sq) { return xkeepSQue("code_NotExistsReferrer_TodosList", sq); }
+
+    public Map<String, TodosCQ> xdfgetCode_SpecifyDerivedReferrer_TodosList() { return xgetSQueMap("code_SpecifyDerivedReferrer_TodosList"); }
+    public String keepCode_SpecifyDerivedReferrer_TodosList(TodosCQ sq) { return xkeepSQue("code_SpecifyDerivedReferrer_TodosList", sq); }
+
+    public Map<String, TodosCQ> xdfgetCode_QueryDerivedReferrer_TodosList() { return xgetSQueMap("code_QueryDerivedReferrer_TodosList"); }
+    public String keepCode_QueryDerivedReferrer_TodosList(TodosCQ sq) { return xkeepSQue("code_QueryDerivedReferrer_TodosList", sq); }
+    public Map<String, Object> xdfgetCode_QueryDerivedReferrer_TodosListParameter() { return xgetSQuePmMap("code_QueryDerivedReferrer_TodosList"); }
+    public String keepCode_QueryDerivedReferrer_TodosListParameter(Object pm) { return xkeepSQuePm("code_QueryDerivedReferrer_TodosList", pm); }
 
     /**
      * Add order-by as ascend. <br>
-     * id: {PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]}
+     * code: {PK, NotNull, varchar(20), classification=TodoStatus}
      * @return this. (NotNull)
      */
-    public BsTodosCQ addOrderBy_Id_Asc() { regOBA("id"); return this; }
+    public BsClsTodoStatusCQ addOrderBy_Code_Asc() { regOBA("code"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * id: {PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]}
+     * code: {PK, NotNull, varchar(20), classification=TodoStatus}
      * @return this. (NotNull)
      */
-    public BsTodosCQ addOrderBy_Id_Desc() { regOBD("id"); return this; }
+    public BsClsTodoStatusCQ addOrderBy_Code_Desc() { regOBD("code"); return this; }
 
-    protected ConditionValue _userId;
-    public ConditionValue xdfgetUserId()
-    { if (_userId == null) { _userId = nCV(); }
-      return _userId; }
-    protected ConditionValue xgetCValueUserId() { return xdfgetUserId(); }
+    protected ConditionValue _name;
+    public ConditionValue xdfgetName()
+    { if (_name == null) { _name = nCV(); }
+      return _name; }
+    protected ConditionValue xgetCValueName() { return xdfgetName(); }
 
     /**
      * Add order-by as ascend. <br>
-     * user_id: {NotNull, uuid(2147483647)}
+     * name: {NotNull, varchar(50)}
      * @return this. (NotNull)
      */
-    public BsTodosCQ addOrderBy_UserId_Asc() { regOBA("user_id"); return this; }
+    public BsClsTodoStatusCQ addOrderBy_Name_Asc() { regOBA("name"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * user_id: {NotNull, uuid(2147483647)}
+     * name: {NotNull, varchar(50)}
      * @return this. (NotNull)
      */
-    public BsTodosCQ addOrderBy_UserId_Desc() { regOBD("user_id"); return this; }
+    public BsClsTodoStatusCQ addOrderBy_Name_Desc() { regOBD("name"); return this; }
 
-    protected ConditionValue _title;
-    public ConditionValue xdfgetTitle()
-    { if (_title == null) { _title = nCV(); }
-      return _title; }
-    protected ConditionValue xgetCValueTitle() { return xdfgetTitle(); }
+    protected ConditionValue _dispOrder;
+    public ConditionValue xdfgetDispOrder()
+    { if (_dispOrder == null) { _dispOrder = nCV(); }
+      return _dispOrder; }
+    protected ConditionValue xgetCValueDispOrder() { return xdfgetDispOrder(); }
 
     /**
      * Add order-by as ascend. <br>
-     * title: {NotNull, varchar(500)}
+     * disp_order: {NotNull, int4(10)}
      * @return this. (NotNull)
      */
-    public BsTodosCQ addOrderBy_Title_Asc() { regOBA("title"); return this; }
+    public BsClsTodoStatusCQ addOrderBy_DispOrder_Asc() { regOBA("disp_order"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * title: {NotNull, varchar(500)}
+     * disp_order: {NotNull, int4(10)}
      * @return this. (NotNull)
      */
-    public BsTodosCQ addOrderBy_Title_Desc() { regOBD("title"); return this; }
-
-    protected ConditionValue _status;
-    public ConditionValue xdfgetStatus()
-    { if (_status == null) { _status = nCV(); }
-      return _status; }
-    protected ConditionValue xgetCValueStatus() { return xdfgetStatus(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus}
-     * @return this. (NotNull)
-     */
-    public BsTodosCQ addOrderBy_Status_Asc() { regOBA("status"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus}
-     * @return this. (NotNull)
-     */
-    public BsTodosCQ addOrderBy_Status_Desc() { regOBD("status"); return this; }
-
-    protected ConditionValue _createdAt;
-    public ConditionValue xdfgetCreatedAt()
-    { if (_createdAt == null) { _createdAt = nCV(); }
-      return _createdAt; }
-    protected ConditionValue xgetCValueCreatedAt() { return xdfgetCreatedAt(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * created_at: {timestamptz(35, 6), default=[now()]}
-     * @return this. (NotNull)
-     */
-    public BsTodosCQ addOrderBy_CreatedAt_Asc() { regOBA("created_at"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * created_at: {timestamptz(35, 6), default=[now()]}
-     * @return this. (NotNull)
-     */
-    public BsTodosCQ addOrderBy_CreatedAt_Desc() { regOBD("created_at"); return this; }
+    public BsClsTodoStatusCQ addOrderBy_DispOrder_Desc() { regOBD("disp_order"); return this; }
 
     // ===================================================================================
     //                                                             SpecifiedDerivedOrderBy
@@ -190,7 +164,7 @@ public class BsTodosCQ extends AbstractBsTodosCQ {
      * @param aliasName The alias name specified at (Specify)DerivedReferrer. (NotNull)
      * @return this. (NotNull)
      */
-    public BsTodosCQ addSpecifiedDerivedOrderBy_Asc(String aliasName) { registerSpecifiedDerivedOrderBy_Asc(aliasName); return this; }
+    public BsClsTodoStatusCQ addSpecifiedDerivedOrderBy_Asc(String aliasName) { registerSpecifiedDerivedOrderBy_Asc(aliasName); return this; }
 
     /**
      * Add order-by for specified derived column as descend.
@@ -206,42 +180,17 @@ public class BsTodosCQ extends AbstractBsTodosCQ {
      * @param aliasName The alias name specified at (Specify)DerivedReferrer. (NotNull)
      * @return this. (NotNull)
      */
-    public BsTodosCQ addSpecifiedDerivedOrderBy_Desc(String aliasName) { registerSpecifiedDerivedOrderBy_Desc(aliasName); return this; }
+    public BsClsTodoStatusCQ addSpecifiedDerivedOrderBy_Desc(String aliasName) { registerSpecifiedDerivedOrderBy_Desc(aliasName); return this; }
 
     // ===================================================================================
     //                                                                         Union Query
     //                                                                         ===========
     public void reflectRelationOnUnionQuery(ConditionQuery bqs, ConditionQuery uqs) {
-        TodosCQ bq = (TodosCQ)bqs;
-        TodosCQ uq = (TodosCQ)uqs;
-        if (bq.hasConditionQueryClsTodoStatus()) {
-            uq.queryClsTodoStatus().reflectRelationOnUnionQuery(bq.queryClsTodoStatus(), uq.queryClsTodoStatus());
-        }
     }
 
     // ===================================================================================
     //                                                                       Foreign Query
     //                                                                       =============
-    /**
-     * Get the condition-query for relation table. <br>
-     * cls_todo_status by my status, named 'clsTodoStatus'.
-     * @return The instance of condition-query. (NotNull)
-     */
-    public ClsTodoStatusCQ queryClsTodoStatus() {
-        return xdfgetConditionQueryClsTodoStatus();
-    }
-    public ClsTodoStatusCQ xdfgetConditionQueryClsTodoStatus() {
-        String prop = "clsTodoStatus";
-        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryClsTodoStatus()); xsetupOuterJoinClsTodoStatus(); }
-        return xgetQueRlMap(prop);
-    }
-    protected ClsTodoStatusCQ xcreateQueryClsTodoStatus() {
-        String nrp = xresolveNRP("todos", "clsTodoStatus"); String jan = xresolveJAN(nrp, xgetNNLvl());
-        return xinitRelCQ(new ClsTodoStatusCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "clsTodoStatus", nrp);
-    }
-    protected void xsetupOuterJoinClsTodoStatus() { xregOutJo("clsTodoStatus"); }
-    public boolean hasConditionQueryClsTodoStatus() { return xhasQueRlMap("clsTodoStatus"); }
-
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String property) {
         return null;
     }
@@ -249,39 +198,39 @@ public class BsTodosCQ extends AbstractBsTodosCQ {
     // ===================================================================================
     //                                                                     ScalarCondition
     //                                                                     ===============
-    public Map<String, TodosCQ> xdfgetScalarCondition() { return xgetSQueMap("scalarCondition"); }
-    public String keepScalarCondition(TodosCQ sq) { return xkeepSQue("scalarCondition", sq); }
+    public Map<String, ClsTodoStatusCQ> xdfgetScalarCondition() { return xgetSQueMap("scalarCondition"); }
+    public String keepScalarCondition(ClsTodoStatusCQ sq) { return xkeepSQue("scalarCondition", sq); }
 
     // ===================================================================================
     //                                                                       MyselfDerived
     //                                                                       =============
-    public Map<String, TodosCQ> xdfgetSpecifyMyselfDerived() { return xgetSQueMap("specifyMyselfDerived"); }
-    public String keepSpecifyMyselfDerived(TodosCQ sq) { return xkeepSQue("specifyMyselfDerived", sq); }
+    public Map<String, ClsTodoStatusCQ> xdfgetSpecifyMyselfDerived() { return xgetSQueMap("specifyMyselfDerived"); }
+    public String keepSpecifyMyselfDerived(ClsTodoStatusCQ sq) { return xkeepSQue("specifyMyselfDerived", sq); }
 
-    public Map<String, TodosCQ> xdfgetQueryMyselfDerived() { return xgetSQueMap("queryMyselfDerived"); }
-    public String keepQueryMyselfDerived(TodosCQ sq) { return xkeepSQue("queryMyselfDerived", sq); }
+    public Map<String, ClsTodoStatusCQ> xdfgetQueryMyselfDerived() { return xgetSQueMap("queryMyselfDerived"); }
+    public String keepQueryMyselfDerived(ClsTodoStatusCQ sq) { return xkeepSQue("queryMyselfDerived", sq); }
     public Map<String, Object> xdfgetQueryMyselfDerivedParameter() { return xgetSQuePmMap("queryMyselfDerived"); }
     public String keepQueryMyselfDerivedParameter(Object pm) { return xkeepSQuePm("queryMyselfDerived", pm); }
 
     // ===================================================================================
     //                                                                        MyselfExists
     //                                                                        ============
-    protected Map<String, TodosCQ> _myselfExistsMap;
-    public Map<String, TodosCQ> xdfgetMyselfExists() { return xgetSQueMap("myselfExists"); }
-    public String keepMyselfExists(TodosCQ sq) { return xkeepSQue("myselfExists", sq); }
+    protected Map<String, ClsTodoStatusCQ> _myselfExistsMap;
+    public Map<String, ClsTodoStatusCQ> xdfgetMyselfExists() { return xgetSQueMap("myselfExists"); }
+    public String keepMyselfExists(ClsTodoStatusCQ sq) { return xkeepSQue("myselfExists", sq); }
 
     // ===================================================================================
     //                                                                       MyselfInScope
     //                                                                       =============
-    public Map<String, TodosCQ> xdfgetMyselfInScope() { return xgetSQueMap("myselfInScope"); }
-    public String keepMyselfInScope(TodosCQ sq) { return xkeepSQue("myselfInScope", sq); }
+    public Map<String, ClsTodoStatusCQ> xdfgetMyselfInScope() { return xgetSQueMap("myselfInScope"); }
+    public String keepMyselfInScope(ClsTodoStatusCQ sq) { return xkeepSQue("myselfInScope", sq); }
 
     // ===================================================================================
     //                                                                       Very Internal
     //                                                                       =============
     // very internal (for suppressing warn about 'Not Use Import')
-    protected String xCB() { return TodosCB.class.getName(); }
-    protected String xCQ() { return TodosCQ.class.getName(); }
+    protected String xCB() { return ClsTodoStatusCB.class.getName(); }
+    protected String xCQ() { return ClsTodoStatusCQ.class.getName(); }
     protected String xCHp() { return HpQDRFunction.class.getName(); }
     protected String xCOp() { return ConditionOption.class.getName(); }
     protected String xMap() { return Map.class.getName(); }

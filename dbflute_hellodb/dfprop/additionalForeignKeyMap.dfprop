@@ -1,0 +1,12 @@
+# Pseudo (additional) foreign keys. Aurora DSQL has no real FK constraints, so the
+# relation between todos.status and the cls_todo_status master is declared here as a
+# DBFlute-only FK. This generates the relationship navigation AND drives the table
+# classification deployment onto todos.status (see classificationDefinitionMap.dfprop).
+map:{
+    ; FK_TODOS_STATUS = map:{
+        ; localTableName  = todos
+        ; foreignTableName = cls_todo_status
+        ; localColumnName  = status
+        ; foreignColumnName = code
+    }
+}
