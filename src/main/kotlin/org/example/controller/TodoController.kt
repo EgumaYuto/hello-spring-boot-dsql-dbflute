@@ -4,6 +4,7 @@ import jakarta.validation.Valid
 import org.example.controller.dto.CreateTodoRequest
 import org.example.controller.dto.TodoResponse
 import org.example.controller.dto.UpdateTodoRequest
+import org.example.dbflute.allcommon.CDef
 import org.example.repository.TodoModel
 import org.example.repository.TodoRepository
 import org.example.security.AuthenticatedUser
@@ -24,7 +25,7 @@ import java.util.UUID
 /**
  * Per-user TODO API. All endpoints require a valid JWT (covered by the
  * `anyRequest().authenticated()` rule in SecurityConfig) and operate only on the
- * authenticated user's items.
+ * authenticated user's items. `status` is a TodoStatus classification code.
  */
 @RestController
 @RequestMapping("/api/todos")
@@ -49,9 +50,13 @@ class TodoController(
     fun update(
         @AuthenticationPrincipal principal: AuthenticatedUser,
         @PathVariable id: UUID,
-        @RequestBody request: UpdateTodoRequest
+        @Valid @RequestBody request: UpdateTodoRequest
     ): TodoResponse {
-        val updated = todoRepository.setDone(userId(principal), id, request.done)
+        // Validate the status against the TodoStatus classification.
+        val status = CDef.TodoStatus.of(request.status).orElseThrow {
+            ResponseStatusException(HttpStatus.BAD_REQUEST, "Unknown status: ${request.status}")
+        }
+        val updated = todoRepository.updateStatus(userId(principal), id, status.code())
             ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found")
         return updated.toResponse()
     }
@@ -68,5 +73,5 @@ class TodoController(
 
     private fun userId(principal: AuthenticatedUser): UUID = UUID.fromString(principal.id)
 
-    private fun TodoModel.toResponse() = TodoResponse(id = id, title = title, done = done)
+    private fun TodoModel.toResponse() = TodoResponse(id = id, title = title, status = status)
 }

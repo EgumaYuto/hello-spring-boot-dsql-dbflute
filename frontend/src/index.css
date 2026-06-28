@@ -177,23 +177,26 @@ th {
   border-bottom: none;
 }
 
-.todo-list label {
+.todo-title {
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.todo-actions {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin: 0;
-  font-weight: 400;
-  cursor: pointer;
-  flex: 1;
+  gap: 0.5rem;
 }
 
-.todo-list input[type='checkbox'] {
-  width: 1.1rem;
-  height: 1.1rem;
-  margin: 0;
+.todo-actions select {
+  padding: 0.3rem 0.4rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: #fff;
 }
 
-.todo-list li.done span {
+.todo-list li.done .todo-title {
   text-decoration: line-through;
   color: #a0aec0;
 }

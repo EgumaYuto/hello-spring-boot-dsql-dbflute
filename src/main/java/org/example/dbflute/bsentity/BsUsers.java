@@ -10,7 +10,8 @@ import org.example.dbflute.allcommon.DBMetaInstanceHandler;
 import org.example.dbflute.exentity.*;
 
 /**
- * The entity of users as TABLE.
+ * The entity of users as TABLE. <br>
+ * shalias:{}
  * @author DBFlute(AutoGenerator)
  */
 public abstract class BsUsers extends AbstractEntity implements DomainEntity {

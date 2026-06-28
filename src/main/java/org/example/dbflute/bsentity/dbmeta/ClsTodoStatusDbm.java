@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.dbflute.Entity;
-import org.dbflute.optional.OptionalEntity;
 import org.dbflute.dbmeta.AbstractDBMeta;
 import org.dbflute.dbmeta.info.*;
 import org.dbflute.dbmeta.name.*;
@@ -14,17 +13,17 @@ import org.example.dbflute.allcommon.*;
 import org.example.dbflute.exentity.*;
 
 /**
- * The DB meta of todos. (Singleton)
+ * The DB meta of cls_todo_status. (Singleton)
  * @author DBFlute(AutoGenerator)
  */
-public class TodosDbm extends AbstractDBMeta {
+public class ClsTodoStatusDbm extends AbstractDBMeta {
 
     // ===================================================================================
     //                                                                           Singleton
     //                                                                           =========
-    private static final TodosDbm _instance = new TodosDbm();
-    private TodosDbm() {}
-    public static TodosDbm getInstance() { return _instance; }
+    private static final ClsTodoStatusDbm _instance = new ClsTodoStatusDbm();
+    private ClsTodoStatusDbm() {}
+    public static ClsTodoStatusDbm getInstance() { return _instance; }
 
     // ===================================================================================
     //                                                                       Current DBDef
@@ -43,41 +42,27 @@ public class TodosDbm extends AbstractDBMeta {
     protected final Map<String, PropertyGateway> _epgMap = newHashMap();
     { xsetupEpg(); }
     protected void xsetupEpg() {
-        setupEpg(_epgMap, et -> ((Todos)et).getId(), (et, vl) -> ((Todos)et).setId((java.util.UUID)vl), "id");
-        setupEpg(_epgMap, et -> ((Todos)et).getUserId(), (et, vl) -> ((Todos)et).setUserId((java.util.UUID)vl), "userId");
-        setupEpg(_epgMap, et -> ((Todos)et).getTitle(), (et, vl) -> ((Todos)et).setTitle((String)vl), "title");
-        setupEpg(_epgMap, et -> ((Todos)et).getStatus(), (et, vl) -> {
-            CDef.TodoStatus cls = (CDef.TodoStatus)gcls(et, columnStatus(), vl);
+        setupEpg(_epgMap, et -> ((ClsTodoStatus)et).getCode(), (et, vl) -> {
+            CDef.TodoStatus cls = (CDef.TodoStatus)gcls(et, columnCode(), vl);
             if (cls != null) {
-                ((Todos)et).setStatusAsTodoStatus(cls);
+                ((ClsTodoStatus)et).setCodeAsTodoStatus(cls);
             } else {
-                ((Todos)et).mynativeMappingStatus((String)vl);
+                ((ClsTodoStatus)et).mynativeMappingCode((String)vl);
             }
-        }, "status");
-        setupEpg(_epgMap, et -> ((Todos)et).getCreatedAt(), (et, vl) -> ((Todos)et).setCreatedAt(ctldt(vl)), "createdAt");
+        }, "code");
+        setupEpg(_epgMap, et -> ((ClsTodoStatus)et).getName(), (et, vl) -> ((ClsTodoStatus)et).setName((String)vl), "name");
+        setupEpg(_epgMap, et -> ((ClsTodoStatus)et).getDispOrder(), (et, vl) -> ((ClsTodoStatus)et).setDispOrder(cti(vl)), "dispOrder");
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
 
-    // -----------------------------------------------------
-    //                                      Foreign Property
-    //                                      ----------------
-    protected final Map<String, PropertyGateway> _efpgMap = newHashMap();
-    { xsetupEfpg(); }
-    @SuppressWarnings("unchecked")
-    protected void xsetupEfpg() {
-        setupEfpg(_efpgMap, et -> ((Todos)et).getClsTodoStatus(), (et, vl) -> ((Todos)et).setClsTodoStatus((OptionalEntity<ClsTodoStatus>)vl), "clsTodoStatus");
-    }
-    public PropertyGateway findForeignPropertyGateway(String prop)
-    { return doFindEfpg(_efpgMap, prop); }
-
     // ===================================================================================
     //                                                                          Table Info
     //                                                                          ==========
-    protected final String _tableDbName = "todos";
-    protected final String _tableDispName = "todos";
-    protected final String _tablePropertyName = "todos";
-    protected final TableSqlName _tableSqlName = new TableSqlName("todos", _tableDbName);
+    protected final String _tableDbName = "cls_todo_status";
+    protected final String _tableDispName = "cls_todo_status";
+    protected final String _tablePropertyName = "clsTodoStatus";
+    protected final TableSqlName _tableSqlName = new TableSqlName("cls_todo_status", _tableDbName);
     { _tableSqlName.xacceptFilter(DBFluteConfig.getInstance().getTableSqlNameFilter()); }
     public String getTableDbName() { return _tableDbName; }
     public String getTableDispName() { return _tableDispName; }
@@ -87,45 +72,31 @@ public class TodosDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnId = cci("id", "id", null, null, java.util.UUID.class, "id", null, true, false, true, "uuid", 2147483647, 0, null, "gen_random_uuid()", false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnUserId = cci("user_id", "user_id", null, null, java.util.UUID.class, "userId", null, false, false, true, "uuid", 2147483647, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnTitle = cci("title", "title", null, null, String.class, "title", null, false, false, true, "varchar", 500, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnStatus = cci("status", "status", null, null, String.class, "status", null, false, false, true, "varchar", 20, 0, null, "'TODO'::character varying", false, null, null, "clsTodoStatus", null, CDef.DefMeta.TodoStatus, false);
-    protected final ColumnInfo _columnCreatedAt = cci("created_at", "created_at", null, null, java.time.LocalDateTime.class, "createdAt", null, false, false, false, "timestamptz", 35, 6, null, "now()", false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnCode = cci("code", "code", null, null, String.class, "code", null, true, false, true, "varchar", 20, 0, null, null, false, null, null, null, "todosList", CDef.DefMeta.TodoStatus, false);
+    protected final ColumnInfo _columnName = cci("name", "name", null, null, String.class, "name", null, false, false, true, "varchar", 50, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnDispOrder = cci("disp_order", "disp_order", null, null, Integer.class, "dispOrder", null, false, false, true, "int4", 10, 0, null, null, false, null, null, null, null, null, false);
 
     /**
-     * id: {PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]}
+     * code: {PK, NotNull, varchar(20), classification=TodoStatus}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnId() { return _columnId; }
+    public ColumnInfo columnCode() { return _columnCode; }
     /**
-     * user_id: {NotNull, uuid(2147483647)}
+     * name: {NotNull, varchar(50)}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnUserId() { return _columnUserId; }
+    public ColumnInfo columnName() { return _columnName; }
     /**
-     * title: {NotNull, varchar(500)}
+     * disp_order: {NotNull, int4(10)}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnTitle() { return _columnTitle; }
-    /**
-     * status: {NotNull, varchar(20), default=['TODO'::character varying], FK to cls_todo_status, classification=TodoStatus}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnStatus() { return _columnStatus; }
-    /**
-     * created_at: {timestamptz(35, 6), default=[now()]}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnCreatedAt() { return _columnCreatedAt; }
+    public ColumnInfo columnDispOrder() { return _columnDispOrder; }
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
-        ls.add(columnId());
-        ls.add(columnUserId());
-        ls.add(columnTitle());
-        ls.add(columnStatus());
-        ls.add(columnCreatedAt());
+        ls.add(columnCode());
+        ls.add(columnName());
+        ls.add(columnDispOrder());
         return ls;
     }
 
@@ -137,7 +108,7 @@ public class TodosDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                       Primary Element
     //                                       ---------------
-    protected UniqueInfo cpui() { return hpcpui(columnId()); }
+    protected UniqueInfo cpui() { return hpcpui(columnCode()); }
     public boolean hasPrimaryKey() { return true; }
     public boolean hasCompoundPrimaryKey() { return false; }
 
@@ -149,18 +120,18 @@ public class TodosDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                      Foreign Property
     //                                      ----------------
-    /**
-     * cls_todo_status by my status, named 'clsTodoStatus'.
-     * @return The information object of foreign property. (NotNull)
-     */
-    public ForeignInfo foreignClsTodoStatus() {
-        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnStatus(), ClsTodoStatusDbm.getInstance().columnCode());
-        return cfi("FK_TODOS_STATUS", "clsTodoStatus", this, ClsTodoStatusDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, true, null, null, false, "todosList", false);
-    }
 
     // -----------------------------------------------------
     //                                     Referrer Property
     //                                     -----------------
+    /**
+     * todos by status, named 'todosList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerTodosList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnCode(), TodosDbm.getInstance().columnStatus());
+        return cri("FK_TODOS_STATUS", "todosList", this, TodosDbm.getInstance(), mp, false, "clsTodoStatus");
+    }
 
     // ===================================================================================
     //                                                                        Various Info
@@ -169,27 +140,27 @@ public class TodosDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                           Type Name
     //                                                                           =========
-    public String getEntityTypeName() { return "org.example.dbflute.exentity.Todos"; }
-    public String getConditionBeanTypeName() { return "org.example.dbflute.cbean.TodosCB"; }
-    public String getBehaviorTypeName() { return "org.example.dbflute.exbhv.TodosBhv"; }
+    public String getEntityTypeName() { return "org.example.dbflute.exentity.ClsTodoStatus"; }
+    public String getConditionBeanTypeName() { return "org.example.dbflute.cbean.ClsTodoStatusCB"; }
+    public String getBehaviorTypeName() { return "org.example.dbflute.exbhv.ClsTodoStatusBhv"; }
 
     // ===================================================================================
     //                                                                         Object Type
     //                                                                         ===========
-    public Class<Todos> getEntityType() { return Todos.class; }
+    public Class<ClsTodoStatus> getEntityType() { return ClsTodoStatus.class; }
 
     // ===================================================================================
     //                                                                     Object Instance
     //                                                                     ===============
-    public Todos newEntity() { return new Todos(); }
+    public ClsTodoStatus newEntity() { return new ClsTodoStatus(); }
 
     // ===================================================================================
     //                                                                   Map Communication
     //                                                                   =================
     public void acceptPrimaryKeyMap(Entity et, Map<String, ? extends Object> mp)
-    { doAcceptPrimaryKeyMap((Todos)et, mp); }
+    { doAcceptPrimaryKeyMap((ClsTodoStatus)et, mp); }
     public void acceptAllColumnMap(Entity et, Map<String, ? extends Object> mp)
-    { doAcceptAllColumnMap((Todos)et, mp); }
+    { doAcceptAllColumnMap((ClsTodoStatus)et, mp); }
     public Map<String, Object> extractPrimaryKeyMap(Entity et) { return doExtractPrimaryKeyMap(et); }
     public Map<String, Object> extractAllColumnMap(Entity et) { return doExtractAllColumnMap(et); }
 }

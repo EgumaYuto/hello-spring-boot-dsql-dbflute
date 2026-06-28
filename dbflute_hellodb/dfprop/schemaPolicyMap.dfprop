@@ -7,9 +7,14 @@
 # treats the rest of the line as part of the value. Keep comments on their own lines.
 # Docs: https://dbflute.seasar.org/ja/manual/reference/dfprop/schemapolicy/
 map:{
-    ; tableExceptList = list:{}
+    # Classification master tables (cls_*) use a varchar `code` PK by convention,
+    # so exempt them from the table/PK policies below.
+    ; tableExceptList = list:{ prefix:cls_ }
     ; tableTargetList = list:{}
-    ; columnExceptMap = map:{}
+    # todos.status has a DBFlute pseudo-FK to cls_todo_status (classification), which
+    # SchemaPolicy counts as an fk. Exempt it from the column policies (the no-FK rule
+    # targets real DB FKs; a pseudo-FK has no DSQL constraint, so it is safe).
+    ; columnExceptMap = map:{ todos = list:{ status } }
     ; isMainSchemaOnly = false
 
     ; wholeMap = map:{

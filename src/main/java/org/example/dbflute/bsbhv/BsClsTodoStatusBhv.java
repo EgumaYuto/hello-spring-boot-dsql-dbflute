@@ -15,6 +15,7 @@ import org.dbflute.exception.*;
 import org.dbflute.hook.CommonColumnAutoSetupper;
 import org.dbflute.optional.OptionalEntity;
 import org.dbflute.outsidesql.executor.*;
+import org.example.dbflute.allcommon.CDef;
 import org.example.dbflute.exbhv.*;
 import org.example.dbflute.bsbhv.loader.*;
 import org.example.dbflute.exentity.*;
@@ -22,10 +23,10 @@ import org.example.dbflute.bsentity.dbmeta.*;
 import org.example.dbflute.cbean.*;
 
 /**
- * The behavior of todos as TABLE.
+ * The behavior of cls_todo_status as TABLE.
  * @author DBFlute(AutoGenerator)
  */
-public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB> {
+public abstract class BsClsTodoStatusBhv extends AbstractBehaviorWritable<ClsTodoStatus, ClsTodoStatusCB> {
 
     // ===================================================================================
     //                                                                          Definition
@@ -37,15 +38,15 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
     //                                                                             DB Meta
     //                                                                             =======
     /** {@inheritDoc} */
-    public TodosDbm asDBMeta() { return TodosDbm.getInstance(); }
+    public ClsTodoStatusDbm asDBMeta() { return ClsTodoStatusDbm.getInstance(); }
     /** {@inheritDoc} */
-    public String asTableDbName() { return "todos"; }
+    public String asTableDbName() { return "cls_todo_status"; }
 
     // ===================================================================================
     //                                                                        New Instance
     //                                                                        ============
     /** {@inheritDoc} */
-    public TodosCB newConditionBean() { return new TodosCB(); }
+    public ClsTodoStatusCB newConditionBean() { return new ClsTodoStatusCB(); }
 
     // ===================================================================================
     //                                                                        Count Select
@@ -54,14 +55,14 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * Select the count of uniquely-selected records by the condition-bean. {IgnorePagingCondition, IgnoreSpecifyColumn}<br>
      * SpecifyColumn is ignored but you can use it only to remove text type column for union's distinct.
      * <pre>
-     * <span style="color: #70226C">int</span> count = <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">selectCount</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #70226C">int</span> count = <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">selectCount</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @return The count for the condition. (NotMinus)
      */
-    public int selectCount(CBCall<TodosCB> cbLambda) {
+    public int selectCount(CBCall<ClsTodoStatusCB> cbLambda) {
         return facadeSelectCount(createCB(cbLambda));
     }
 
@@ -75,38 +76,38 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * <span style="color: #AD4747; font-size: 120%">If it might be no data, isPresent() and orElse(), ...</span>
      * <pre>
      * <span style="color: #3F7E5E">// if the data always exists as your business rule</span>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
-     * }).<span style="color: #CC4747">alwaysPresent</span>(<span style="color: #553000">todos</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * }).<span style="color: #CC4747">alwaysPresent</span>(<span style="color: #553000">clsTodoStatus</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if present, or exception</span>
-     *     ... = <span style="color: #553000">todos</span>.get...
+     *     ... = <span style="color: #553000">clsTodoStatus</span>.get...
      * });
      *
      * <span style="color: #3F7E5E">// if it might be no data, ...</span>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">selectEntity</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
-     * }).<span style="color: #CC4747">ifPresent</span>(<span style="color: #553000">todos</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * }).<span style="color: #CC4747">ifPresent</span>(<span style="color: #553000">clsTodoStatus</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if present</span>
-     *     ... = <span style="color: #553000">todos</span>.get...
+     *     ... = <span style="color: #553000">clsTodoStatus</span>.get...
      * }).<span style="color: #994747">orElse</span>(() <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// called if not present</span>
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @return The optional entity selected by the condition. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), alwaysPresent() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Todos> selectEntity(CBCall<TodosCB> cbLambda) {
+    public OptionalEntity<ClsTodoStatus> selectEntity(CBCall<ClsTodoStatusCB> cbLambda) {
         return facadeSelectEntity(createCB(cbLambda));
     }
 
-    protected OptionalEntity<Todos> facadeSelectEntity(TodosCB cb) {
+    protected OptionalEntity<ClsTodoStatus> facadeSelectEntity(ClsTodoStatusCB cb) {
         return doSelectOptionalEntity(cb, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Todos> OptionalEntity<ENTITY> doSelectOptionalEntity(TodosCB cb, Class<? extends ENTITY> tp) {
+    protected <ENTITY extends ClsTodoStatus> OptionalEntity<ENTITY> doSelectOptionalEntity(ClsTodoStatusCB cb, Class<? extends ENTITY> tp) {
         return createOptionalEntity(doSelectEntity(cb, tp), cb);
     }
 
@@ -116,46 +117,46 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * Select the entity by the condition-bean with deleted check. <br>
      * <span style="color: #AD4747; font-size: 120%">If the data is always present as your business rule, this method is good.</span>
      * <pre>
-     * Todos <span style="color: #553000">todos</span> = <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">selectEntityWithDeletedCheck</span>(cb <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> cb.acceptPK(1));
-     * ... = <span style="color: #553000">todos</span>.get...(); <span style="color: #3F7E5E">// the entity always be not null</span>
+     * ClsTodoStatus <span style="color: #553000">clsTodoStatus</span> = <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">selectEntityWithDeletedCheck</span>(cb <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> cb.acceptPK(1));
+     * ... = <span style="color: #553000">clsTodoStatus</span>.get...(); <span style="color: #3F7E5E">// the entity always be not null</span>
      * </pre>
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @return The entity selected by the condition. (NotNull: if no data, throws exception)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public Todos selectEntityWithDeletedCheck(CBCall<TodosCB> cbLambda) {
+    public ClsTodoStatus selectEntityWithDeletedCheck(CBCall<ClsTodoStatusCB> cbLambda) {
         return facadeSelectEntityWithDeletedCheck(createCB(cbLambda));
     }
 
     /**
      * Select the entity by the primary-key value.
-     * @param id : PK, NotNull, uuid(2147483647), default=[gen_random_uuid()]. (NotNull)
+     * @param code : PK, NotNull, varchar(20), classification=TodoStatus. (NotNull)
      * @return The optional entity selected by the PK. (NotNull: if no data, empty entity)
      * @throws EntityAlreadyDeletedException When get(), alwaysPresent() of return value is called and the value is null, which means entity has already been deleted (not found).
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
      */
-    public OptionalEntity<Todos> selectByPK(java.util.UUID id) {
-        return facadeSelectByPK(id);
+    public OptionalEntity<ClsTodoStatus> selectByPK(CDef.TodoStatus code) {
+        return facadeSelectByPK(code);
     }
 
-    protected OptionalEntity<Todos> facadeSelectByPK(java.util.UUID id) {
-        return doSelectOptionalByPK(id, typeOfSelectedEntity());
+    protected OptionalEntity<ClsTodoStatus> facadeSelectByPK(CDef.TodoStatus code) {
+        return doSelectOptionalByPK(code, typeOfSelectedEntity());
     }
 
-    protected <ENTITY extends Todos> ENTITY doSelectByPK(java.util.UUID id, Class<? extends ENTITY> tp) {
-        return doSelectEntity(xprepareCBAsPK(id), tp);
+    protected <ENTITY extends ClsTodoStatus> ENTITY doSelectByPK(CDef.TodoStatus code, Class<? extends ENTITY> tp) {
+        return doSelectEntity(xprepareCBAsPK(code), tp);
     }
 
-    protected <ENTITY extends Todos> OptionalEntity<ENTITY> doSelectOptionalByPK(java.util.UUID id, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectByPK(id, tp), id);
+    protected <ENTITY extends ClsTodoStatus> OptionalEntity<ENTITY> doSelectOptionalByPK(CDef.TodoStatus code, Class<? extends ENTITY> tp) {
+        return createOptionalEntity(doSelectByPK(code, tp), code);
     }
 
-    protected TodosCB xprepareCBAsPK(java.util.UUID id) {
-        assertObjectNotNull("id", id);
-        return newConditionBean().acceptPK(id);
+    protected ClsTodoStatusCB xprepareCBAsPK(CDef.TodoStatus code) {
+        assertObjectNotNull("code", code);
+        return newConditionBean().acceptPK(code);
     }
 
     // ===================================================================================
@@ -164,19 +165,19 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
     /**
      * Select the list as result bean.
      * <pre>
-     * ListResultBean&lt;Todos&gt; <span style="color: #553000">todosList</span> = <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">selectList</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * ListResultBean&lt;ClsTodoStatus&gt; <span style="color: #553000">clsTodoStatusList</span> = <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">selectList</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...;
      *     <span style="color: #553000">cb</span>.query().addOrderBy...;
      * });
-     * <span style="color: #70226C">for</span> (Todos <span style="color: #553000">todos</span> : <span style="color: #553000">todosList</span>) {
-     *     ... = <span style="color: #553000">todos</span>.get...;
+     * <span style="color: #70226C">for</span> (ClsTodoStatus <span style="color: #553000">clsTodoStatus</span> : <span style="color: #553000">clsTodoStatusList</span>) {
+     *     ... = <span style="color: #553000">clsTodoStatus</span>.get...;
      * }
      * </pre>
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @return The result bean of selected list. (NotNull: if no data, returns empty list)
      * @throws DangerousResultSizeException When the result size is over the specified safety size.
      */
-    public ListResultBean<Todos> selectList(CBCall<TodosCB> cbLambda) {
+    public ListResultBean<ClsTodoStatus> selectList(CBCall<ClsTodoStatusCB> cbLambda) {
         return facadeSelectList(createCB(cbLambda));
     }
 
@@ -190,7 +191,7 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * Select the page as result bean. <br>
      * (both count-select and paging-select are executed)
      * <pre>
-     * PagingResultBean&lt;Todos&gt; <span style="color: #553000">page</span> = <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">selectPage</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * PagingResultBean&lt;ClsTodoStatus&gt; <span style="color: #553000">page</span> = <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">selectPage</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      *     <span style="color: #553000">cb</span>.query().addOrderBy...
      *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">paging</span>(20, 3); <span style="color: #3F7E5E">// 20 records per a page and current page number is 3</span>
@@ -200,15 +201,15 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * <span style="color: #70226C">boolean</span> isExistPrePage = <span style="color: #553000">page</span>.isExistPrePage();
      * <span style="color: #70226C">boolean</span> isExistNextPage = <span style="color: #553000">page</span>.isExistNextPage();
      * ...
-     * <span style="color: #70226C">for</span> (Todos todos : <span style="color: #553000">page</span>) {
-     *     ... = todos.get...;
+     * <span style="color: #70226C">for</span> (ClsTodoStatus clsTodoStatus : <span style="color: #553000">page</span>) {
+     *     ... = clsTodoStatus.get...;
      * }
      * </pre>
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @return The result bean of selected page. (NotNull: if no data, returns bean as empty list)
      * @throws DangerousResultSizeException When the result size is over the specified safety size.
      */
-    public PagingResultBean<Todos> selectPage(CBCall<TodosCB> cbLambda) {
+    public PagingResultBean<ClsTodoStatus> selectPage(CBCall<ClsTodoStatusCB> cbLambda) {
         return facadeSelectPage(createCB(cbLambda));
     }
 
@@ -218,16 +219,16 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
     /**
      * Select the cursor by the condition-bean.
      * <pre>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">selectCursor</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">selectCursor</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().set...
      * }, <span style="color: #553000">member</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     ... = <span style="color: #553000">member</span>.getMemberName();
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
-     * @param entityLambda The handler of entity row of Todos. (NotNull)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
+     * @param entityLambda The handler of entity row of ClsTodoStatus. (NotNull)
      */
-    public void selectCursor(CBCall<TodosCB> cbLambda, EntityRowHandler<Todos> entityLambda) {
+    public void selectCursor(CBCall<ClsTodoStatusCB> cbLambda, EntityRowHandler<ClsTodoStatus> entityLambda) {
         facadeSelectCursor(createCB(cbLambda), entityLambda);
     }
 
@@ -238,7 +239,7 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * Select the scalar value derived by a function from uniquely-selected records. <br>
      * You should call a function method after this method called like as follows:
      * <pre>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">selectScalar</span>(Date.class).max(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">selectScalar</span>(Date.class).max(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.specify().<span style="color: #CC4747">column...</span>; <span style="color: #3F7E5E">// required for the function</span>
      *     <span style="color: #553000">cb</span>.query().set...
      * });
@@ -247,7 +248,7 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * @param resultType The type of result. (NotNull)
      * @return The scalar function object to specify function for scalar value. (NotNull)
      */
-    public <RESULT> HpSLSFunction<TodosCB, RESULT> selectScalar(Class<RESULT> resultType) {
+    public <RESULT> HpSLSFunction<ClsTodoStatusCB, RESULT> selectScalar(Class<RESULT> resultType) {
         return facadeScalarSelect(resultType);
     }
 
@@ -292,12 +293,12 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * </pre>
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has order by FK before callback.
-     * @param todosList The entity list of todos. (NotNull)
+     * @param clsTodoStatusList The entity list of clsTodoStatus. (NotNull)
      * @param loaderLambda The callback to handle the referrer loader for actually loading referrer. (NotNull)
      */
-    public void load(List<Todos> todosList, ReferrerLoaderHandler<LoaderOfTodos> loaderLambda) {
-        xassLRArg(todosList, loaderLambda);
-        loaderLambda.handle(new LoaderOfTodos().ready(todosList, _behaviorSelector));
+    public void load(List<ClsTodoStatus> clsTodoStatusList, ReferrerLoaderHandler<LoaderOfClsTodoStatus> loaderLambda) {
+        xassLRArg(clsTodoStatusList, loaderLambda);
+        loaderLambda.handle(new LoaderOfClsTodoStatus().ready(clsTodoStatusList, _behaviorSelector));
     }
 
     /**
@@ -325,35 +326,91 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * </pre>
      * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
      * The condition-bean, which the set-upper provides, has order by FK before callback.
-     * @param todos The entity of todos. (NotNull)
+     * @param clsTodoStatus The entity of clsTodoStatus. (NotNull)
      * @param loaderLambda The callback to handle the referrer loader for actually loading referrer. (NotNull)
      */
-    public void load(Todos todos, ReferrerLoaderHandler<LoaderOfTodos> loaderLambda) {
-        xassLRArg(todos, loaderLambda);
-        loaderLambda.handle(new LoaderOfTodos().ready(xnewLRAryLs(todos), _behaviorSelector));
+    public void load(ClsTodoStatus clsTodoStatus, ReferrerLoaderHandler<LoaderOfClsTodoStatus> loaderLambda) {
+        xassLRArg(clsTodoStatus, loaderLambda);
+        loaderLambda.handle(new LoaderOfClsTodoStatus().ready(xnewLRAryLs(clsTodoStatus), _behaviorSelector));
+    }
+
+    /**
+     * Load referrer of todosList by the set-upper of referrer. <br>
+     * todos by status, named 'todosList'.
+     * <pre>
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">loadTodos</span>(<span style="color: #553000">clsTodoStatusList</span>, <span style="color: #553000">todosCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">todosCB</span>.setupSelect...
+     *     <span style="color: #553000">todosCB</span>.query().set...
+     *     <span style="color: #553000">todosCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (ClsTodoStatus clsTodoStatus : <span style="color: #553000">clsTodoStatusList</span>) {
+     *     ... = clsTodoStatus.<span style="color: #CC4747">getTodosList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setStatus_InScope(pkList);
+     * cb.query().addOrderBy_Status_Asc();
+     * </pre>
+     * @param clsTodoStatusList The entity list of clsTodoStatus. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<Todos> loadTodos(List<ClsTodoStatus> clsTodoStatusList, ReferrerConditionSetupper<TodosCB> refCBLambda) {
+        xassLRArg(clsTodoStatusList, refCBLambda);
+        return doLoadTodos(clsTodoStatusList, new LoadReferrerOption<TodosCB, Todos>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of todosList by the set-upper of referrer. <br>
+     * todos by status, named 'todosList'.
+     * <pre>
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">loadTodos</span>(<span style="color: #553000">clsTodoStatus</span>, <span style="color: #553000">todosCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">todosCB</span>.setupSelect...
+     *     <span style="color: #553000">todosCB</span>.query().set...
+     *     <span style="color: #553000">todosCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">clsTodoStatus</span>.<span style="color: #CC4747">getTodosList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setStatus_InScope(pkList);
+     * cb.query().addOrderBy_Status_Asc();
+     * </pre>
+     * @param clsTodoStatus The entity of clsTodoStatus. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<Todos> loadTodos(ClsTodoStatus clsTodoStatus, ReferrerConditionSetupper<TodosCB> refCBLambda) {
+        xassLRArg(clsTodoStatus, refCBLambda);
+        return doLoadTodos(xnewLRLs(clsTodoStatus), new LoadReferrerOption<TodosCB, Todos>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<Todos> doLoadTodos(List<ClsTodoStatus> clsTodoStatusList, LoadReferrerOption<TodosCB, Todos> option) {
+        return helpLoadReferrerInternally(clsTodoStatusList, option, "todosList");
     }
 
     // ===================================================================================
     //                                                                   Pull out Relation
     //                                                                   =================
-    /**
-     * Pull out the list of foreign table 'ClsTodoStatus'.
-     * @param todosList The list of todos. (NotNull, EmptyAllowed)
-     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<ClsTodoStatus> pulloutClsTodoStatus(List<Todos> todosList)
-    { return helpPulloutInternally(todosList, "clsTodoStatus"); }
-
     // ===================================================================================
     //                                                                      Extract Column
     //                                                                      ==============
     /**
-     * Extract the value list of (single) primary key id.
-     * @param todosList The list of todos. (NotNull, EmptyAllowed)
+     * Extract the value list of (single) primary key code.
+     * @param clsTodoStatusList The list of clsTodoStatus. (NotNull, EmptyAllowed)
      * @return The list of the column value. (NotNull, EmptyAllowed, NotNullElement)
      */
-    public List<java.util.UUID> extractIdList(List<Todos> todosList)
-    { return helpExtractListInternally(todosList, "id"); }
+    public List<String> extractCodeList(List<ClsTodoStatus> clsTodoStatusList)
+    { return helpExtractListInternally(clsTodoStatusList, "code"); }
 
     // ===================================================================================
     //                                                                       Entity Update
@@ -361,80 +418,80 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
     /**
      * Insert the entity modified-only. (DefaultConstraintsEnabled)
      * <pre>
-     * Todos todos = <span style="color: #70226C">new</span> Todos();
+     * ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
      * <span style="color: #3F7E5E">// if auto-increment, you don't need to set the PK value</span>
-     * todos.setFoo...(value);
-     * todos.setBar...(value);
+     * clsTodoStatus.setFoo...(value);
+     * clsTodoStatus.setBar...(value);
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//todos.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//todos.set...;</span>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">insert</span>(todos);
-     * ... = todos.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
+     * <span style="color: #3F7E5E">//clsTodoStatus.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//clsTodoStatus.set...;</span>
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">insert</span>(clsTodoStatus);
+     * ... = clsTodoStatus.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
      * </pre>
      * <p>While, when the entity is created by select, all columns are registered.</p>
-     * @param todos The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
+     * @param clsTodoStatus The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void insert(Todos todos) {
-        doInsert(todos, null);
+    public void insert(ClsTodoStatus clsTodoStatus) {
+        doInsert(clsTodoStatus, null);
     }
 
     /**
      * Update the entity modified-only. (ZeroUpdateException, NonExclusiveControl) <br>
      * By PK as default, and also you can update by unique keys using entity's uniqueOf().
      * <pre>
-     * Todos todos = <span style="color: #70226C">new</span> Todos();
-     * todos.setPK...(value); <span style="color: #3F7E5E">// required</span>
-     * todos.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
+     * clsTodoStatus.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * clsTodoStatus.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//todos.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//todos.set...;</span>
+     * <span style="color: #3F7E5E">//clsTodoStatus.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//clsTodoStatus.set...;</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * todos.<span style="color: #CC4747">setVersionNo</span>(value);
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">update</span>(todos);
+     * clsTodoStatus.<span style="color: #CC4747">setVersionNo</span>(value);
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">update</span>(clsTodoStatus);
      * </pre>
-     * @param todos The entity of update. (NotNull, PrimaryKeyNotNull)
+     * @param clsTodoStatus The entity of update. (NotNull, PrimaryKeyNotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void update(Todos todos) {
-        doUpdate(todos, null);
+    public void update(ClsTodoStatus clsTodoStatus) {
+        doUpdate(clsTodoStatus, null);
     }
 
     /**
      * Insert or update the entity modified-only. (DefaultConstraintsEnabled, NonExclusiveControl) <br>
      * if (the entity has no PK) { insert() } else { update(), but no data, insert() } <br>
      * <p><span style="color: #994747; font-size: 120%">Also you can update by unique keys using entity's uniqueOf().</span></p>
-     * @param todos The entity of insert or update. (NotNull, ...depends on insert or update)
+     * @param clsTodoStatus The entity of insert or update. (NotNull, ...depends on insert or update)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void insertOrUpdate(Todos todos) {
-        doInsertOrUpdate(todos, null, null);
+    public void insertOrUpdate(ClsTodoStatus clsTodoStatus) {
+        doInsertOrUpdate(clsTodoStatus, null, null);
     }
 
     /**
      * Delete the entity. (ZeroUpdateException, NonExclusiveControl) <br>
      * By PK as default, and also you can delete by unique keys using entity's uniqueOf().
      * <pre>
-     * Todos todos = <span style="color: #70226C">new</span> Todos();
-     * todos.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
+     * clsTodoStatus.setPK...(value); <span style="color: #3F7E5E">// required</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * todos.<span style="color: #CC4747">setVersionNo</span>(value);
+     * clsTodoStatus.<span style="color: #CC4747">setVersionNo</span>(value);
      * <span style="color: #70226C">try</span> {
-     *     <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">delete</span>(todos);
+     *     <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">delete</span>(clsTodoStatus);
      * } <span style="color: #70226C">catch</span> (EntityAlreadyUpdatedException e) { <span style="color: #3F7E5E">// if concurrent update</span>
      *     ...
      * }
      * </pre>
-     * @param todos The entity of delete. (NotNull, PrimaryKeyNotNull)
+     * @param clsTodoStatus The entity of delete. (NotNull, PrimaryKeyNotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      */
-    public void delete(Todos todos) {
-        doDelete(todos, null);
+    public void delete(ClsTodoStatus clsTodoStatus) {
+        doDelete(clsTodoStatus, null);
     }
 
     // ===================================================================================
@@ -446,26 +503,26 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * <p><span style="color: #CC4747; font-size: 120%">The columns of least common multiple are registered like this:</span></p>
      * <pre>
      * <span style="color: #70226C">for</span> (... : ...) {
-     *     Todos todos = <span style="color: #70226C">new</span> Todos();
-     *     todos.setFooName("foo");
+     *     ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
+     *     clsTodoStatus.setFooName("foo");
      *     <span style="color: #70226C">if</span> (...) {
-     *         todos.setFooPrice(123);
+     *         clsTodoStatus.setFooPrice(123);
      *     }
      *     <span style="color: #3F7E5E">// FOO_NAME and FOO_PRICE (and record meta columns) are registered</span>
      *     <span style="color: #3F7E5E">// FOO_PRICE not-called in any entities are registered as null without default value</span>
      *     <span style="color: #3F7E5E">// columns not-called in all entities are registered as null or default value</span>
-     *     todosList.add(todos);
+     *     clsTodoStatusList.add(clsTodoStatus);
      * }
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">batchInsert</span>(todosList);
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">batchInsert</span>(clsTodoStatusList);
      * </pre>
      * <p>While, when the entities are created by select, all columns are registered.</p>
      * <p>And if the table has an identity, entities after the process don't have incremented values.
      * (When you use the (normal) insert(), you can get the incremented value from your entity)</p>
-     * @param todosList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNullAllowed: when auto-increment)
+     * @param clsTodoStatusList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNullAllowed: when auto-increment)
      * @return The array of inserted count. (NotNull, EmptyAllowed)
      */
-    public int[] batchInsert(List<Todos> todosList) {
-        return doBatchInsert(todosList, null);
+    public int[] batchInsert(List<ClsTodoStatus> clsTodoStatusList) {
+        return doBatchInsert(clsTodoStatusList, null);
     }
 
     /**
@@ -474,37 +531,37 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * <span style="color: #CC4747; font-size: 120%">You should specify same-set columns to all entities like this:</span>
      * <pre>
      * for (... : ...) {
-     *     Todos todos = <span style="color: #70226C">new</span> Todos();
-     *     todos.setFooName("foo");
+     *     ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
+     *     clsTodoStatus.setFooName("foo");
      *     <span style="color: #70226C">if</span> (...) {
-     *         todos.setFooPrice(123);
+     *         clsTodoStatus.setFooPrice(123);
      *     } <span style="color: #70226C">else</span> {
-     *         todos.setFooPrice(null); <span style="color: #3F7E5E">// updated as null</span>
-     *         <span style="color: #3F7E5E">//todos.setFooDate(...); // *not allowed, fragmented</span>
+     *         clsTodoStatus.setFooPrice(null); <span style="color: #3F7E5E">// updated as null</span>
+     *         <span style="color: #3F7E5E">//clsTodoStatus.setFooDate(...); // *not allowed, fragmented</span>
      *     }
      *     <span style="color: #3F7E5E">// FOO_NAME and FOO_PRICE (and record meta columns) are updated</span>
      *     <span style="color: #3F7E5E">// (others are not updated: their values are kept)</span>
-     *     todosList.add(todos);
+     *     clsTodoStatusList.add(clsTodoStatus);
      * }
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">batchUpdate</span>(todosList);
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">batchUpdate</span>(clsTodoStatusList);
      * </pre>
-     * @param todosList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param clsTodoStatusList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      */
-    public int[] batchUpdate(List<Todos> todosList) {
-        return doBatchUpdate(todosList, null);
+    public int[] batchUpdate(List<ClsTodoStatus> clsTodoStatusList) {
+        return doBatchUpdate(clsTodoStatusList, null);
     }
 
     /**
      * Batch-delete the entity list. (NonExclusiveControl) <br>
      * This method uses executeBatch() of java.sql.PreparedStatement.
-     * @param todosList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param clsTodoStatusList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @return The array of deleted count. (NotNull, EmptyAllowed)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      */
-    public int[] batchDelete(List<Todos> todosList) {
-        return doBatchDelete(todosList, null);
+    public int[] batchDelete(List<ClsTodoStatus> clsTodoStatusList) {
+        return doBatchDelete(clsTodoStatusList, null);
     }
 
     // ===================================================================================
@@ -513,8 +570,8 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
     /**
      * Insert the several entities by query (modified-only for fixed value).
      * <pre>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">queryInsert</span>(new QueryInsertSetupper&lt;Todos, TodosCB&gt;() {
-     *     public ConditionBean setup(Todos entity, TodosCB intoCB) {
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">queryInsert</span>(new QueryInsertSetupper&lt;ClsTodoStatus, ClsTodoStatusCB&gt;() {
+     *     public ConditionBean setup(ClsTodoStatus entity, ClsTodoStatusCB intoCB) {
      *         FooCB cb = FooCB();
      *         cb.setupSelect_Bar();
      *
@@ -536,48 +593,48 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * @param manyArgLambda The callback to set up query-insert. (NotNull)
      * @return The inserted count.
      */
-    public int queryInsert(QueryInsertSetupper<Todos, TodosCB> manyArgLambda) {
+    public int queryInsert(QueryInsertSetupper<ClsTodoStatus, ClsTodoStatusCB> manyArgLambda) {
         return doQueryInsert(manyArgLambda, null);
     }
 
     /**
      * Update the several entities by query non-strictly modified-only. (NonExclusiveControl)
      * <pre>
-     * Todos todos = <span style="color: #70226C">new</span> Todos();
+     * ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
      * <span style="color: #3F7E5E">// you don't need to set PK value</span>
-     * <span style="color: #3F7E5E">//todos.setPK...(value);</span>
-     * todos.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * <span style="color: #3F7E5E">//clsTodoStatus.setPK...(value);</span>
+     * clsTodoStatus.setFoo...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set values of common columns</span>
-     * <span style="color: #3F7E5E">//todos.setRegisterUser(value);</span>
-     * <span style="color: #3F7E5E">//todos.set...;</span>
+     * <span style="color: #3F7E5E">//clsTodoStatus.setRegisterUser(value);</span>
+     * <span style="color: #3F7E5E">//clsTodoStatus.set...;</span>
      * <span style="color: #3F7E5E">// you don't need to set a value of concurrency column</span>
      * <span style="color: #3F7E5E">// (auto-increment for version number is valid though non-exclusive control)</span>
-     * <span style="color: #3F7E5E">//todos.setVersionNo(value);</span>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">queryUpdate</span>(todos, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #3F7E5E">//clsTodoStatus.setVersionNo(value);</span>
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">queryUpdate</span>(clsTodoStatus, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * });
      * </pre>
-     * @param todos The entity that contains update values. (NotNull, PrimaryKeyNullAllowed)
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param clsTodoStatus The entity that contains update values. (NotNull, PrimaryKeyNullAllowed)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @return The updated count.
      * @throws NonQueryUpdateNotAllowedException When the query has no condition.
      */
-    public int queryUpdate(Todos todos, CBCall<TodosCB> cbLambda) {
-        return doQueryUpdate(todos, createCB(cbLambda), null);
+    public int queryUpdate(ClsTodoStatus clsTodoStatus, CBCall<ClsTodoStatusCB> cbLambda) {
+        return doQueryUpdate(clsTodoStatus, createCB(cbLambda), null);
     }
 
     /**
      * Delete the several entities by query. (NonExclusiveControl)
      * <pre>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">queryDelete</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">queryDelete</span>(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @return The deleted count.
      * @throws NonQueryDeleteNotAllowedException When the query has no condition.
      */
-    public int queryDelete(CBCall<TodosCB> cbLambda) {
+    public int queryDelete(CBCall<ClsTodoStatusCB> cbLambda) {
         return doQueryDelete(createCB(cbLambda), null);
     }
 
@@ -592,22 +649,22 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * For example, disableCommonColumnAutoSetup(), disablePrimaryKeyIdentity(). <br>
      * Other specifications are same as insert(entity).
      * <pre>
-     * Todos todos = <span style="color: #70226C">new</span> Todos();
+     * ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
      * <span style="color: #3F7E5E">// if auto-increment, you don't need to set the PK value</span>
-     * todos.setFoo...(value);
-     * todos.setBar...(value);
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">varyingInsert</span>(todos, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * clsTodoStatus.setFoo...(value);
+     * clsTodoStatus.setBar...(value);
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">varyingInsert</span>(clsTodoStatus, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #3F7E5E">// you can insert by your values for common columns</span>
      *     <span style="color: #553000">op</span>.disableCommonColumnAutoSetup();
      * });
-     * ... = todos.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
+     * ... = clsTodoStatus.getPK...(); <span style="color: #3F7E5E">// if auto-increment, you can get the value after</span>
      * </pre>
-     * @param todos The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
+     * @param clsTodoStatus The entity of insert. (NotNull, PrimaryKeyNullAllowed: when auto-increment)
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingInsert(Todos todos, WritableOptionCall<TodosCB, InsertOption<TodosCB>> opLambda) {
-        doInsert(todos, createInsertOption(opLambda));
+    public void varyingInsert(ClsTodoStatus clsTodoStatus, WritableOptionCall<ClsTodoStatusCB, InsertOption<ClsTodoStatusCB>> opLambda) {
+        doInsert(clsTodoStatus, createInsertOption(opLambda));
     }
 
     /**
@@ -615,53 +672,53 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * For example, self(selfCalculationSpecification), specify(updateColumnSpecification), disableCommonColumnAutoSetup(). <br>
      * Other specifications are same as update(entity).
      * <pre>
-     * Todos todos = <span style="color: #70226C">new</span> Todos();
-     * todos.setPK...(value); <span style="color: #3F7E5E">// required</span>
-     * todos.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
+     * clsTodoStatus.setPK...(value); <span style="color: #3F7E5E">// required</span>
+     * clsTodoStatus.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// if exclusive control, the value of concurrency column is required</span>
-     * todos.<span style="color: #CC4747">setVersionNo</span>(value);
+     * clsTodoStatus.<span style="color: #CC4747">setVersionNo</span>(value);
      * <span style="color: #3F7E5E">// you can update by self calculation values</span>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">varyingUpdate</span>(todos, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">varyingUpdate</span>(clsTodoStatus, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>.self(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *         <span style="color: #553000">cb</span>.specify().<span style="color: #CC4747">columnXxxCount()</span>;
      *     }).plus(1); <span style="color: #3F7E5E">// XXX_COUNT = XXX_COUNT + 1</span>
      * });
      * </pre>
-     * @param todos The entity of update. (NotNull, PrimaryKeyNotNull)
+     * @param clsTodoStatus The entity of update. (NotNull, PrimaryKeyNotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingUpdate(Todos todos, WritableOptionCall<TodosCB, UpdateOption<TodosCB>> opLambda) {
-        doUpdate(todos, createUpdateOption(opLambda));
+    public void varyingUpdate(ClsTodoStatus clsTodoStatus, WritableOptionCall<ClsTodoStatusCB, UpdateOption<ClsTodoStatusCB>> opLambda) {
+        doUpdate(clsTodoStatus, createUpdateOption(opLambda));
     }
 
     /**
      * Insert or update the entity with varying requests. (ExclusiveControl: when update) <br>
      * Other specifications are same as insertOrUpdate(entity).
-     * @param todos The entity of insert or update. (NotNull)
+     * @param clsTodoStatus The entity of insert or update. (NotNull)
      * @param insertOpLambda The callback for option of insert for varying requests. (NotNull)
      * @param updateOpLambda The callback for option of update for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      * @throws EntityAlreadyExistsException When the entity already exists. (unique constraint violation)
      */
-    public void varyingInsertOrUpdate(Todos todos, WritableOptionCall<TodosCB, InsertOption<TodosCB>> insertOpLambda, WritableOptionCall<TodosCB, UpdateOption<TodosCB>> updateOpLambda) {
-        doInsertOrUpdate(todos, createInsertOption(insertOpLambda), createUpdateOption(updateOpLambda));
+    public void varyingInsertOrUpdate(ClsTodoStatus clsTodoStatus, WritableOptionCall<ClsTodoStatusCB, InsertOption<ClsTodoStatusCB>> insertOpLambda, WritableOptionCall<ClsTodoStatusCB, UpdateOption<ClsTodoStatusCB>> updateOpLambda) {
+        doInsertOrUpdate(clsTodoStatus, createInsertOption(insertOpLambda), createUpdateOption(updateOpLambda));
     }
 
     /**
      * Delete the entity with varying requests. (ZeroUpdateException, NonExclusiveControl) <br>
      * Now a valid option does not exist. <br>
      * Other specifications are same as delete(entity).
-     * @param todos The entity of delete. (NotNull, PrimaryKeyNotNull, ConcurrencyColumnNotNull)
+     * @param clsTodoStatus The entity of delete. (NotNull, PrimaryKeyNotNull, ConcurrencyColumnNotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @throws EntityAlreadyDeletedException When the entity has already been deleted. (not found)
      * @throws EntityDuplicatedException When the entity has been duplicated.
      */
-    public void varyingDelete(Todos todos, WritableOptionCall<TodosCB, DeleteOption<TodosCB>> opLambda) {
-        doDelete(todos, createDeleteOption(opLambda));
+    public void varyingDelete(ClsTodoStatus clsTodoStatus, WritableOptionCall<ClsTodoStatusCB, DeleteOption<ClsTodoStatusCB>> opLambda) {
+        doDelete(clsTodoStatus, createDeleteOption(opLambda));
     }
 
     // -----------------------------------------------------
@@ -672,12 +729,12 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * For example, disableCommonColumnAutoSetup()
      * , disablePrimaryKeyIdentity(), limitBatchInsertLogging(). <br>
      * Other specifications are same as batchInsert(entityList).
-     * @param todosList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param clsTodoStatusList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchInsert(List<Todos> todosList, WritableOptionCall<TodosCB, InsertOption<TodosCB>> opLambda) {
-        return doBatchInsert(todosList, createInsertOption(opLambda));
+    public int[] varyingBatchInsert(List<ClsTodoStatus> clsTodoStatusList, WritableOptionCall<ClsTodoStatusCB, InsertOption<ClsTodoStatusCB>> opLambda) {
+        return doBatchInsert(clsTodoStatusList, createInsertOption(opLambda));
     }
 
     /**
@@ -685,24 +742,24 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * For example, self(selfCalculationSpecification), specify(updateColumnSpecification)
      * , disableCommonColumnAutoSetup(), limitBatchUpdateLogging(). <br>
      * Other specifications are same as batchUpdate(entityList).
-     * @param todosList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param clsTodoStatusList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @return The array of updated count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchUpdate(List<Todos> todosList, WritableOptionCall<TodosCB, UpdateOption<TodosCB>> opLambda) {
-        return doBatchUpdate(todosList, createUpdateOption(opLambda));
+    public int[] varyingBatchUpdate(List<ClsTodoStatus> clsTodoStatusList, WritableOptionCall<ClsTodoStatusCB, UpdateOption<ClsTodoStatusCB>> opLambda) {
+        return doBatchUpdate(clsTodoStatusList, createUpdateOption(opLambda));
     }
 
     /**
      * Batch-delete the list with varying requests. <br>
      * For example, limitBatchDeleteLogging(). <br>
      * Other specifications are same as batchDelete(entityList).
-     * @param todosList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
+     * @param clsTodoStatusList The list of the entity. (NotNull, EmptyAllowed, PrimaryKeyNotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @return The array of deleted count. (NotNull, EmptyAllowed)
      */
-    public int[] varyingBatchDelete(List<Todos> todosList, WritableOptionCall<TodosCB, DeleteOption<TodosCB>> opLambda) {
-        return doBatchDelete(todosList, createDeleteOption(opLambda));
+    public int[] varyingBatchDelete(List<ClsTodoStatus> clsTodoStatusList, WritableOptionCall<ClsTodoStatusCB, DeleteOption<ClsTodoStatusCB>> opLambda) {
+        return doBatchDelete(clsTodoStatusList, createDeleteOption(opLambda));
     }
 
     // -----------------------------------------------------
@@ -716,7 +773,7 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * @param opLambda The callback for option of insert for varying requests. (NotNull)
      * @return The inserted count.
      */
-    public int varyingQueryInsert(QueryInsertSetupper<Todos, TodosCB> manyArgLambda, WritableOptionCall<TodosCB, InsertOption<TodosCB>> opLambda) {
+    public int varyingQueryInsert(QueryInsertSetupper<ClsTodoStatus, ClsTodoStatusCB> manyArgLambda, WritableOptionCall<ClsTodoStatusCB, InsertOption<ClsTodoStatusCB>> opLambda) {
         return doQueryInsert(manyArgLambda, createInsertOption(opLambda));
     }
 
@@ -727,14 +784,14 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * Other specifications are same as queryUpdate(entity, cb).
      * <pre>
      * <span style="color: #3F7E5E">// ex) you can update by self calculation values</span>
-     * Todos todos = <span style="color: #70226C">new</span> Todos();
+     * ClsTodoStatus clsTodoStatus = <span style="color: #70226C">new</span> ClsTodoStatus();
      * <span style="color: #3F7E5E">// you don't need to set PK value</span>
-     * <span style="color: #3F7E5E">//todos.setPK...(value);</span>
-     * todos.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
+     * <span style="color: #3F7E5E">//clsTodoStatus.setPK...(value);</span>
+     * clsTodoStatus.setOther...(value); <span style="color: #3F7E5E">// you should set only modified columns</span>
      * <span style="color: #3F7E5E">// you don't need to set a value of concurrency column</span>
      * <span style="color: #3F7E5E">// (auto-increment for version number is valid though non-exclusive control)</span>
-     * <span style="color: #3F7E5E">//todos.setVersionNo(value);</span>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">varyingQueryUpdate</span>(todos, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #3F7E5E">//clsTodoStatus.setVersionNo(value);</span>
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">varyingQueryUpdate</span>(clsTodoStatus, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * }, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>.self(<span style="color: #553000">colCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
@@ -742,14 +799,14 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      *     }).plus(1); <span style="color: #3F7E5E">// FOO_COUNT = FOO_COUNT + 1</span>
      * });
      * </pre>
-     * @param todos The entity that contains update values. (NotNull) {PrimaryKeyNotRequired}
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param clsTodoStatus The entity that contains update values. (NotNull) {PrimaryKeyNotRequired}
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @param opLambda The callback for option of update for varying requests. (NotNull)
      * @return The updated count.
      * @throws NonQueryUpdateNotAllowedException When the query has no condition (if not allowed).
      */
-    public int varyingQueryUpdate(Todos todos, CBCall<TodosCB> cbLambda, WritableOptionCall<TodosCB, UpdateOption<TodosCB>> opLambda) {
-        return doQueryUpdate(todos, createCB(cbLambda), createUpdateOption(opLambda));
+    public int varyingQueryUpdate(ClsTodoStatus clsTodoStatus, CBCall<ClsTodoStatusCB> cbLambda, WritableOptionCall<ClsTodoStatusCB, UpdateOption<ClsTodoStatusCB>> opLambda) {
+        return doQueryUpdate(clsTodoStatus, createCB(cbLambda), createUpdateOption(opLambda));
     }
 
     /**
@@ -757,18 +814,18 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * For example, allowNonQueryDelete(). <br>
      * Other specifications are same as queryDelete(cb).
      * <pre>
-     * <span style="color: #0000C0">todosBhv</span>.<span style="color: #CC4747">queryDelete</span>(todos, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     * <span style="color: #0000C0">clsTodoStatusBhv</span>.<span style="color: #CC4747">queryDelete</span>(clsTodoStatus, <span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">cb</span>.query().setFoo...
      * }, <span style="color: #553000">op</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
      *     <span style="color: #553000">op</span>...
      * });
      * </pre>
-     * @param cbLambda The callback for condition-bean of Todos. (NotNull)
+     * @param cbLambda The callback for condition-bean of ClsTodoStatus. (NotNull)
      * @param opLambda The callback for option of delete for varying requests. (NotNull)
      * @return The deleted count.
      * @throws NonQueryDeleteNotAllowedException When the query has no condition (if not allowed).
      */
-    public int varyingQueryDelete(CBCall<TodosCB> cbLambda, WritableOptionCall<TodosCB, DeleteOption<TodosCB>> opLambda) {
+    public int varyingQueryDelete(CBCall<ClsTodoStatusCB> cbLambda, WritableOptionCall<ClsTodoStatusCB, DeleteOption<ClsTodoStatusCB>> opLambda) {
         return doQueryDelete(createCB(cbLambda), createDeleteOption(opLambda));
     }
 
@@ -779,40 +836,40 @@ public abstract class BsTodosBhv extends AbstractBehaviorWritable<Todos, TodosCB
      * Prepare the all facade executor of outside-SQL to execute it.
      * <pre>
      * <span style="color: #3F7E5E">// main style</span>
-     * todosBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
-     * todosBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
-     * todosBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
-     * todosBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
-     * todosBhv.outideSql().selectCursor(pmb, handler); <span style="color: #3F7E5E">// (by handler)</span>
-     * todosBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
-     * todosBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
+     * clsTodoStatusBhv.outideSql().selectEntity(pmb); <span style="color: #3F7E5E">// optional</span>
+     * clsTodoStatusBhv.outideSql().selectList(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
+     * clsTodoStatusBhv.outideSql().selectPage(pmb); <span style="color: #3F7E5E">// PagingResultBean</span>
+     * clsTodoStatusBhv.outideSql().selectPagedListOnly(pmb); <span style="color: #3F7E5E">// ListResultBean</span>
+     * clsTodoStatusBhv.outideSql().selectCursor(pmb, handler); <span style="color: #3F7E5E">// (by handler)</span>
+     * clsTodoStatusBhv.outideSql().execute(pmb); <span style="color: #3F7E5E">// int (updated count)</span>
+     * clsTodoStatusBhv.outideSql().call(pmb); <span style="color: #3F7E5E">// void (pmb has OUT parameters)</span>
      *
      * <span style="color: #3F7E5E">// traditional style</span>
-     * todosBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
-     * todosBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
-     * todosBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
-     * todosBhv.outideSql().traditionalStyle().selectPagedListOnly(path, pmb, entityType);
-     * todosBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
-     * todosBhv.outideSql().traditionalStyle().execute(path, pmb);
+     * clsTodoStatusBhv.outideSql().traditionalStyle().selectEntity(path, pmb, entityType);
+     * clsTodoStatusBhv.outideSql().traditionalStyle().selectList(path, pmb, entityType);
+     * clsTodoStatusBhv.outideSql().traditionalStyle().selectPage(path, pmb, entityType);
+     * clsTodoStatusBhv.outideSql().traditionalStyle().selectPagedListOnly(path, pmb, entityType);
+     * clsTodoStatusBhv.outideSql().traditionalStyle().selectCursor(path, pmb, handler);
+     * clsTodoStatusBhv.outideSql().traditionalStyle().execute(path, pmb);
      *
      * <span style="color: #3F7E5E">// options</span>
-     * todosBhv.outideSql().removeBlockComment().selectList()
-     * todosBhv.outideSql().removeLineComment().selectList()
-     * todosBhv.outideSql().formatSql().selectList()
+     * clsTodoStatusBhv.outideSql().removeBlockComment().selectList()
+     * clsTodoStatusBhv.outideSql().removeLineComment().selectList()
+     * clsTodoStatusBhv.outideSql().formatSql().selectList()
      * </pre>
      * <p>The invoker of behavior command should be not null when you call this method.</p>
      * @return The new-created all facade executor of outside-SQL. (NotNull)
      */
-    public OutsideSqlAllFacadeExecutor<TodosBhv> outsideSql() {
+    public OutsideSqlAllFacadeExecutor<ClsTodoStatusBhv> outsideSql() {
         return doOutsideSql();
     }
 
     // ===================================================================================
     //                                                                         Type Helper
     //                                                                         ===========
-    protected Class<? extends Todos> typeOfSelectedEntity() { return Todos.class; }
-    protected Class<Todos> typeOfHandlingEntity() { return Todos.class; }
-    protected Class<TodosCB> typeOfHandlingConditionBean() { return TodosCB.class; }
+    protected Class<? extends ClsTodoStatus> typeOfSelectedEntity() { return ClsTodoStatus.class; }
+    protected Class<ClsTodoStatus> typeOfHandlingEntity() { return ClsTodoStatus.class; }
+    protected Class<ClsTodoStatusCB> typeOfHandlingConditionBean() { return ClsTodoStatusCB.class; }
 
     // ===================================================================================
     //                                                                            Accessor
