@@ -30,6 +30,8 @@ map:{
         ; statementList = list:{
             ; if column is fk then bad
             ; if columnName is suffix:_at then dbType is prefix:timestamp
+            ; if column is pk then columnName is id
+            ; if column is pk then dbType is uuid
         }
     }
 }
