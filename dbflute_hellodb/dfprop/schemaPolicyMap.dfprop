@@ -22,9 +22,13 @@ map:{
         ; statementList = list:{}
     }
 
-    # column names are lower case
+    # column names are lower case; and FK constraints are forbidden because Aurora
+    # DSQL (the production DB) does not support foreign keys. If anyone adds an FK
+    # (real or pseudo), SchemaPolicyCheck fails so it never reaches DSQL.
     ; columnMap = map:{
         ; themeList = list:{ lowerCaseBasis }
-        ; statementList = list:{}
+        ; statementList = list:{
+            ; if column is fk then bad
+        }
     }
 }
