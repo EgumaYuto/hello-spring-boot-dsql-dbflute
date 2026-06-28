@@ -29,6 +29,7 @@ map:{
         ; themeList = list:{ lowerCaseBasis }
         ; statementList = list:{
             ; if column is fk then bad
+            ; if columnName is suffix:_at then dbType is prefix:timestamp
         }
     }
 }
